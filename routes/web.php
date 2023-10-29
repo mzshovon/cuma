@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Frontend\LandingPageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [HomeController::class, 'dashboard'])->name('admin.dashboard');
+Route::get('/registration', [LandingPageController::class, 'viewLandingPage'])->name('registration');
 
 Auth::routes();
 
