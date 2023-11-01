@@ -28,7 +28,13 @@ class MembershipDetail extends Model
         'reference',
         'reference_number',
         'user_id',
+        'payment',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public static function createNewMember(array $data)
     {
@@ -59,8 +65,26 @@ class MembershipDetail extends Model
         return $data->get()->toArray();
     }
 
-    public function user()
+     /**
+     * @param string $whereParam
+     * @param int|string $value
+     * @param array|null $updatedInfo
+     *
+     * @return mixed
+     */
+    public static function updateMemberByParam(string $whereParam, int|string $value, array|null $updatedInfo)
     {
-        return $this->belongsTo(User::class);
+        return self::where($whereParam, $value)->update($updatedInfo);
+    }
+
+    /**
+     * @param string $whereParam
+     * @param int|string $value
+     *
+     * @return
+     */
+    public static function deleteMemberByParam(string $whereParam, int|string $value)
+    {
+        return self::where($whereParam, $value)->delete();
     }
 }

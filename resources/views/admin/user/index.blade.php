@@ -23,17 +23,13 @@
                                 <div class="col-10">
                                     <h5 class="card-title">{{ $title }}</h5>
                                 </div>
-                                <div class="col-2">
+                                {{-- <div class="col-2">
                                     <h5 class="card-title">
                                         <a href="javascript:void(0)" class="btn btn-success btn-sm"
                                             onclick="createEditModalShow(null,null,null)">Add new</a>
                                     </h5>
-                                </div>
+                                </div> --}}
                             </div>
-
-                            @if (Session::has('assignRoleMsg'))
-                                <h6 style="color: green;" class="ml-3 mb-1">{{ Session::get('assignRoleMsg') }}</h6>
-                            @endif
                             <!-- Table with stripped rows -->
                             <table class="table datatable">
                                 <thead>
@@ -41,10 +37,13 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Email</th>
-                                        <th scope="col">Register Type</th>
-                                        <th>Assign Role</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Actions</th>
+                                        <th scope="col">Contact</th>
+                                        <th scope="col">Payment</th>
+                                        <th scope="col">Batch</th>
+                                        <th scope="col">Blood Group</th>
+                                        {{-- <th>Assign Role</th> --}}
+                                        <th scope="col">Role</th>
+                                        <th scope="col">Registered At</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -53,10 +52,14 @@
                                             <th scope="row">{{ ++$key }}</th>
                                             <td>{{ $user['name'] }}</td>
                                             <td>{{ $user['email'] }}</td>
-                                            <td>{{ isset($user['social_type']) && $user['social_type'] ? ucfirst($user['social_type']) : 'Portal' }}
-                                            </td>
+                                            <td>{{ $user['contact'] }}</td>
+                                            <td>{{ $user['members']['payment'] }}</td>
+                                            <td>{{ $user['members']['batch'] }}</td>
+                                            <td>{{ $user['members']['blood_group'] }}</td>
+                                            <td>{{ isset($user['roles'][0]) ? $user['roles'][0]['name'] : "user" }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($user['updated_at'])->format("d, M Y") }}</td>
 
-                                            <td>
+                                            {{-- <td>
                                                 @php
                                                     $userRole = App\Models\User::userRole($user['id']);
                                                 @endphp
@@ -69,9 +72,9 @@
                                                     <a href="javascript:void(0)" class="badge bg-info bg-xs"
                                                         onclick="assignRoleModalShow(`{{ $user['id'] }}`, null)">Assign Role</a>
                                                 @endif
-                                            </td>
+                                            </td> --}}
 
-                                            <td>
+                                            {{-- <td>
                                                 @if (isset($user['status']))
                                                     <span
                                                         class="badge bg-{{ $user['status'] == 1 ? 'success' : 'warning' }}">
@@ -80,8 +83,8 @@
                                                         {{ $user['status'] == 1 ? 'Active' : 'Inactive' }}
                                                     </span>
                                                 @endif
-                                            </td>
-                                            <td>
+                                            </td> --}}
+                                            {{-- <td>
                                                 <div class="d-flex">
                                                     <a href="javascript:void(0)"
                                                         onclick="createEditModalShow(`{{ $user['name'] }}`, `{{ $user['email'] }}`, `{{ $user['status'] }}`, `{{ $user['id'] }}`)"
@@ -91,7 +94,7 @@
                                                         class="btn btn-danger btn-sm"><i
                                                             class="bi bi-trash-fill"></i></a>
                                                 </div>
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -100,43 +103,6 @@
 
                         </div>
                     </div>
-
-                    {{--  create/edit modal  --}}
-                    <div class="modal fade" id="create-or-edit-modal" tabindex="-1" data-bs-backdrop="false">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form id="submitModalForm" action="{{ route('admin.createUser') }}" method="POST">
-                                    @csrf
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Create/Edit User</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <input type="hidden" name="id" id="id_user">
-                                        <div class="modal-body">
-                                            <input type="text" class="form-control" placeholder="Enter name"
-                                                name="name" id="id_name" required>
-                                            <br>
-                                            <input type="email" class="form-control" placeholder="Enter email"
-                                                name="email" id="id_email" required>
-                                            <br>
-                                            <select name="status" id="id_status" class="form-control">
-                                                <option id="option_id1" value="1">Active</option>
-                                                <option id="option_id0" value="0">Inactive</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Save</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    {{--  create/edit modal end  --}}
 
                     {{--  Assign modal start  --}}
                     <div class="modal fade" id="role-assign-modal">
@@ -182,34 +148,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('/') }}admin/assets/js/call.js"></script>
     <script>
-        function createEditModalShow(name, email, status, userId) {
-            if (name) {
-                $("#id_name").val(name);
-            } else {
-                $("#id_name").val('');
-            }
-            if (email) {
-                $("#id_email").val(email);
-            } else {
-                $("#id_email").val('');
-            }
-            if (status) {
-                $("#option_id" + status).prop('selected', true);
-            } else {
-                $('#id_status').find($('option')).prop('selected', false);
-            }
-            if (userId) {
-                $("#id_user").val(userId);
-                var url = '{{ route('admin.updateUser', ':userId') }}';
-                url = url.replace(':userId', userId);
-                $('#submitModalForm').attr('action', url);
-            } else {
-                $("#id_user").val('');
-                $('#submitModalForm').attr('action', `{{ route('admin.createUser') }}`);
-            }
-            $("#create-or-edit-modal").modal('show')
-        }
-
         function assignRoleModalShow(userId, roleId) {
             if(userId == "" || userId == null){
                 return false

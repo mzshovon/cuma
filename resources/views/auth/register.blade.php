@@ -179,34 +179,35 @@
                                     <input type="password" name="password_confirmation" id="password_confirmation" />
                                 </div>
                             </div>
+                            <input type="hidden" name="payment" id="payment" />
                             <div class="form-radio">
                                 <div class="label-flex">
                                     <label for="payment">Payment Mode</label>
                                 </div>
                                 <div class="form-radio-group">
                                     <div class="form-radio-item">
-                                        <input type="radio" name="payment" id="life_member" >
+                                        <input type="radio" name="payments" id="life_member" >
                                         <label for="life_member">Life Member</label>
                                         <span class="check"></span>
                                     </div>
                                     </div>
                                 <div class="form-radio-group">
                                     <div class="form-radio-item">
-                                        <input type="radio" name="payment" id="general_member" >
+                                        <input type="radio" name="payments" id="general_member" >
                                         <label for="general_member">General Member</label>
                                         <span class="check"></span>
                                     </div>
                                     </div>
                                 <div class="form-radio-group">
                                     <div class="form-radio-item">
-                                        <input type="radio" name="payment" id="donor_member" >
+                                        <input type="radio" name="payments" id="donor_member" >
                                         <label for="donor_member">Donor Member</label>
                                         <span class="check"></span>
                                     </div>
                                     </div>
                                     <div class="form-radio-group">
                                     <div class="form-radio-item">
-                                        <input type="radio" name="payment" id="honorary_member">
+                                        <input type="radio" name="payments" id="honorary_member">
                                         <label for="honorary_member">Honorary Member</label>
                                         <span class="check"></span>
                                     </div>
@@ -217,6 +218,7 @@
                     </div>
                     <div class="form-submit">
                         <input type="submit" value="Submit" class="submit" id="submit" name="submit" />
+                        <div style="margin-top:20px">Already a member? <a href="{{route('login')}}">Sign In</a></div>
                         {{-- <input type="button" value="Reset" class="submit" id="reset" name="reset" /> --}}
                     </div>
                 </form>

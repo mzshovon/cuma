@@ -84,12 +84,19 @@
             </div>
             <div class="signup-form" style="padding:80px!important">
                 <form method="POST" class="register-form" id="register-form" action="{{route('login')}}">
+                    @if($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="error-alert">
+                            {{$error}}
+                        </div>
+                    @endforeach
+                    @endif
                     @csrf
                     <div class="form-row">
                         <div class="form-group">
                             <div class="form-input">
-                                <label for="email" class="required">Email</label>
-                                <input type="text" name="email" id="email" />
+                                <label for="email" class="required">Email or Phone Number</label>
+                                <input type="text" name="username" id="email" />
                             </div>
                             <div class="form-input">
                                 <label for="chequeno">Password</label>
@@ -102,7 +109,10 @@
                         <input type="submit" value="Submit" class="submit" id="submit" name="submit" />
                         {{-- <input type="button" value="Reset" class="submit" id="reset" name="reset" /> --}}
                     {{-- </div> --}}
+                    Forget password? <a href="{{route('password.request')}}">Reset Password</a>
+                    <div style="margin-top:20px">Don't have an account yet? <a href="{{route('register')}}">Sign Up</a></div>
                 </form>
+
             </div>
             </div>
         </div>

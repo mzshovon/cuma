@@ -5,17 +5,24 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\CreateUserRequest;
 use App\Http\Requests\admin\UpdateUserRequest;
+use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Services\User\UserService;
+use App\Models\Role;
 use App\Models\User;
+use App\Rules\MatchOldPassword;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
-    public function getUsers(Request $request){
+    public function getUsers(UserService $userService){
         try {
-            // $data['users'] = $this->repo->getUsersInfo();
-            // $data['title'] = self::USER_VIEW_PAGE_TITLE;
+            $data['users'] = $userService->getUsersInfo();
+            // dd($data['users']);
+            $data['title'] = "Members List";
             $data['roles'] = Role::all();
             return view('admin.user.index', $data);
 
@@ -73,6 +80,44 @@ class UserController extends Controller
 
     public function profile()
     {
-        dd(true);
+        $data['title'] = "User Profile";
+        return view("admin.profile.index", $data);
+    }
+
+    public function profileUpdate(ProfileUpdateRequest $request, UserService $userService)
+    {
+        $userId= $request->id;
+        $memberData['first_name'] = $request->first_name;
+        $memberData['last_name'] = $request->last_name;
+        $userData['name'] = $request->first_name . " " . $request->last_name;
+        $userData['email'] = $request->email;
+        $userData['contact'] = $request->contact;
+        $memberData['nid'] = $request->nid;
+        $memberData['dob'] = $request->dob;
+        $memberData['address'] = $request->address;
+        $memberData['blood_group'] = $request->blood_group;
+        $memberData['batch'] = $request->batch;
+        $memberData['payment'] = $request->payment;
+        $memberData['employeer_name'] = $request->employeer_name;
+        $memberData['designation'] = $request->designation;
+        $memberData['employeer_address'] = $request->employeer_address;
+        $memberData['reference'] = $request->reference;
+        $memberData['reference_number'] = $request->reference_number;
+        [$message, $status] = $userService->updateUserInfoById($userId, $memberData, $userData);
+        Session::put($message, $status);
+        return redirect("/admin/user-profile");
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required', new MatchOldPassword],
+            'new_password' => ['required'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
+
+        User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
+        Auth::logout();
+        return redirect('/login');
     }
 }

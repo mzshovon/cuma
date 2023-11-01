@@ -52,7 +52,7 @@ class User extends Authenticatable
 
     public function getUsersList($limit = null, array|null $values = null, $from = null, $to = null, $order = "DESC")
     {
-        $data = $this->with("members")->orderBy("updated_at", $order);
+        $data = $this->with("members","roles")->orderBy("updated_at", $order);
 
         $data->when($values, function($q) use ($values){
             $q->get($values);
@@ -63,6 +63,50 @@ class User extends Authenticatable
         });
 
         return $data->get()->toArray();
+    }
+
+    /**
+     * @param string $whereParam
+     * @param mixed $value
+     *
+     * @return
+     */
+    public static function getSingleUserByParam(string $whereParam, $value)
+    {
+        return self::where($whereParam, $value)->first();
+    }
+
+    /**
+     * @param array $userInfo
+     *
+     * @return
+     */
+    public static function createUser(array $userInfo)
+    {
+        return self::create($userInfo);;
+    }
+
+    /**
+     * @param string $whereParam
+     * @param int|string $value
+     * @param array|null $updatedInfo
+     *
+     * @return mixed
+     */
+    public static function updateUserByParam(string $whereParam, int|string $value, array|null $updatedInfo)
+    {
+        return self::where($whereParam, $value)->update($updatedInfo);
+    }
+
+    /**
+     * @param string $whereParam
+     * @param int|string $value
+     *
+     * @return
+     */
+    public static function deleteUserByParam(string $whereParam, int|string $value)
+    {
+        return self::where($whereParam, $value)->delete();
     }
 
 }

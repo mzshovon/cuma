@@ -16,17 +16,29 @@
       <div class="row">
 
         <!-- Left side columns -->
-        <div class="col-lg-12">
-            <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                Hello, <b>{{auth()->user()->name}}</b> Welcome to {{env('APP_NAME') ?? "CUMA"}} 🎉
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        @if (Hash::check(auth()->user()->email, auth()->user()->password))
+            <div class="col-lg-12">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    Hello, <b>{{auth()->user()->name}}</b> Look like your password is very weak. Please click <a href="{{route('admin.profile')}}">change password</a> strong password to secure your profile.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             </div>
-        </div>
+        @else
+            <div class="col-lg-12">
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    Hello, <b>{{auth()->user()->name}}</b> Welcome to {{env('APP_NAME') ?? "CUMA"}} 🎉
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        @endif
+
+        @if (auth()->user()->hasRole('superadmin'))
         <div class="col-lg-8">
           <div class="row">
             <!-- Recent Sales -->
-            @include('admin.layouts.partials.cards')
-            @include('admin.layouts.partials.topMembers')
+
+                @include('admin.layouts.partials.cards')
+                @include('admin.layouts.partials.topMembers')
 
           </div>
         </div><!-- End Left side columns -->
@@ -74,6 +86,36 @@
           </div><!-- End News & Updates -->
 
         </div><!-- End Right side columns -->
+        @else
+        <div class="col-lg-12">
+              <!-- Website Traffic -->
+              <div class="card">
+
+                <div class="card-body pb-0">
+                  <img src="https://cdn.dribbble.com/users/1223630/screenshots/8115260/media/8145a871d9c4d67ec06e047ccc6574b4.gif"/>
+                  <a href="{{route('admin.profile')}}" class="btn btn-outline-primary btn-lg"> Visit profile </a>
+                  <a href="{{route('admin.profile')}}" class="btn btn-outline-primary btn-lg"> Change password </a>
+                </div>
+              </div><!-- End Website Traffic -->
+
+              <!-- News & Updates Traffic -->
+              <div class="card">
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+              </div><!-- End News & Updates -->
+
+            </div><!-- End Right side columns -->
+        @endif
 
       </div>
     </section>

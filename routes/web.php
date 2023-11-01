@@ -30,37 +30,37 @@ Auth::routes();
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function() {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
-    // Permission routes
-    Route::group(['prefix' => 'permissions'], function() {
-        Route::get('/', [PermissionsController::class, 'index'])->name('permissionsList');
-        Route::post('/store', [PermissionsController::class, 'store'])->name('storePermissions');
-    });
+    // // Permission routes
+    // Route::group(['prefix' => 'permissions'], function() {
+    //     Route::get('/', [PermissionsController::class, 'index'])->name('permissionsList');
+    //     Route::post('/store', [PermissionsController::class, 'store'])->name('storePermissions');
+    // });
 
-    // Roles routes
-    Route::group(['prefix' => 'roles'], function() {
-        Route::get('/', [RolesController::class, 'index'])->name('rolesList');
-        Route::get('/create', [RolesController::class, 'create'])->name('createRoles');
-        Route::post('/store', [RolesController::class, 'store'])->name('storeRoles');
-        Route::get('/edit/{id}', [RolesController::class, 'edit'])->name('editRoles');
-        Route::patch('/update/{id}', [RolesController::class, 'update'])->name('updateRoles');
-    });
+    // // Roles routes
+    // Route::group(['prefix' => 'roles'], function() {
+    //     Route::get('/', [RolesController::class, 'index'])->name('rolesList');
+    //     Route::get('/create', [RolesController::class, 'create'])->name('createRoles');
+    //     Route::post('/store', [RolesController::class, 'store'])->name('storeRoles');
+    //     Route::get('/edit/{id}', [RolesController::class, 'edit'])->name('editRoles');
+    //     Route::patch('/update/{id}', [RolesController::class, 'update'])->name('updateRoles');
+    // });
 
-    // Room types routes
-    Route::group(['prefix' => 'room-types'], function() {
-        Route::get('/', [RoomTypesController::class, 'index'])->name('roomTypesList');
-        Route::get('/create', [RoomTypesController::class, 'create'])->name('createRoomType');
-        Route::get('/edit/{room_type_id}', [RoomTypesController::class, 'edit'])->name('editRoomType');
-        Route::post('/store', [RoomTypesController::class, 'create'])->name('storeRoomType');
-        Route::delete('/delete/{room_type_id}', [RoomTypesController::class, 'destroy'])->name('deleteRoomType');
-    });
+    // // Room types routes
+    // Route::group(['prefix' => 'room-types'], function() {
+    //     Route::get('/', [RoomTypesController::class, 'index'])->name('roomTypesList');
+    //     Route::get('/create', [RoomTypesController::class, 'create'])->name('createRoomType');
+    //     Route::get('/edit/{room_type_id}', [RoomTypesController::class, 'edit'])->name('editRoomType');
+    //     Route::post('/store', [RoomTypesController::class, 'create'])->name('storeRoomType');
+    //     Route::delete('/delete/{room_type_id}', [RoomTypesController::class, 'destroy'])->name('deleteRoomType');
+    // });
 
     // Activity Log routes
-    Route::group(['prefix' => 'activity-log'], function() {
-        Route::get('/', [AdminUtilityController::class, 'getActivityLogs'])->name('activityLogs');
-    });
+    // Route::group(['prefix' => 'activity-log'], function() {
+    //     Route::get('/', [AdminUtilityController::class, 'getActivityLogs'])->name('activityLogs');
+    // });
 
     // User routes
-    Route::group(['prefix' => 'users'], function() {
+    Route::group(['prefix' => 'member'], function() {
         Route::get('/', [UserController::class, 'getUsers'])->name('usersList');
         Route::post('/store', [UserController::class, 'createUser'])->name('createUser');
         Route::post('/update/{userId}', [UserController::class, 'updateUser'])->name('updateUser');
@@ -71,6 +71,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // User routes
     Route::group(['prefix' => 'user-profile'], function() {
         Route::get('/', [UserController::class, 'profile'])->name('profile');
+        Route::post('/update', [UserController::class, 'profileUpdate'])->name('profile.uddate');
+        Route::post('/reset/password', [UserController::class, 'resetPassword'])->name('profile.reset-password');
     });
 
     Route::group(['prefix' => 'error'], function() {

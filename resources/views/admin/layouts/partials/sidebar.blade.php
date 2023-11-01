@@ -26,14 +26,16 @@
             </a>
         </li><!-- End Dashboard Nav -->
 
+        @if (auth()->user()->hasRole("superadmin"))
+            <li class="nav-item">
+                <a class="nav-link {{ in_array($route, ['admin.usersList']) ? 'nav-item-active-a' : 'collapsed' }}"
+                    href="{{ route('admin.usersList') }}">
+                    <i class="bi bi-people"></i>
+                    <span>Members</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+        @endif
 
-        <li class="nav-item">
-            <a class="nav-link {{ in_array($route, ['admin.usersList']) ? 'nav-item-active-a' : 'collapsed' }}"
-                href="{{ route('admin.usersList') }}">
-                <i class="bi bi-people"></i>
-                <span>Members</span>
-            </a>
-        </li><!-- End Dashboard Nav -->
 {{--
         <li class="nav-heading">Pages</li>
 

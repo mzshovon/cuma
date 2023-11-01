@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -61,5 +61,54 @@
             </div>
         </div>
     </div>
+</div>
+@endsection --}}
+
+@extends('frontend.partials.app')
+@section('content')
+
+<div class="main">
+
+    <div class="container">
+        <div class="signup-content">
+            <div class="signup-img">
+                <img src="{{asset('/frontend/images/CUMA-Logo.png')}}" alt="">
+            </div>
+            <div class="signup-form" style="padding:80px!important">
+                <form method="POST" class="register-form" id="register-form" action="{{ route('password.update') }}">
+                    @if($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="error-alert">
+                            {{$error}}
+                        </div>
+                    @endforeach
+                    @endif
+                    @csrf
+                    <div class="form-row">
+                        <input type="hidden" name="token" value="{{ $token }}">
+                        <div class="form-group">
+                            <div class="form-input">
+                                <label for="email" class="required">Email</label>
+                                <input type="email" name="email" id="email" />
+                            </div>
+                            <div class="form-input">
+                                <label for="password" class="required">Password</label>
+                                <input type="password" name="password" id="password" />
+                            </div>
+                            <div class="form-input">
+                                <label for="password_confirmation" class="required">Confirm Password</label>
+                                <input type="password" name="password_confirmation" id="password" />
+                            </div>
+                        </div>
+
+                    </div>
+                        <input type="submit" value="Reset" class="submit" id="submit" name="submit" />
+                </form>
+
+            </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 @endsection
