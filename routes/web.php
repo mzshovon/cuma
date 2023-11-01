@@ -19,13 +19,13 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [HomeController::class, 'dashboard'])->name('admin.dashboard');
-Route::get('/registration', [LandingPageController::class, 'viewLandingPage'])->name('registration');
+Route::get('/', [HomeController::class, 'dashboard'])->name('admin.dashboard.begin');
+Route::get('/register', [LandingPageController::class, 'viewLandingPage'])->name('registration');
 
 Auth::routes();
 
 // admin routes
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'permission']], function() {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function() {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
     // Permission routes

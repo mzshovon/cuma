@@ -17,7 +17,7 @@
 
 @yield('content')
 
-<script src="{{ asset('/frontend/vendor/jquery/jquery.min.js') }}"></script>
+<script src="{{asset('/frontend/vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('/frontend/vendor/nouislider/nouislider.min.js')}}"></script>
 <script src="{{asset('/frontend/vendor/wnumb/wNumb.js')}}"></script>
 <script src="{{asset('/frontend/vendor/jquery-validation/dist/jquery.validate.min.js')}}"></script>

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -73,5 +73,157 @@
             </div>
         </div>
     </div>
+</div>
+@endsection --}}
+
+
+@extends('frontend.partials.app')
+@section('content')
+
+<div class="main">
+
+    <div class="container">
+        <div class="signup-content">
+            <div class="signup-img">
+                <img src="{{asset('/frontend/images/CUMA-Logo.png')}}" alt="">
+            </div>
+            <div class="signup-form">
+
+                <form method="POST" class="register-form" id="register-form" action="{{route('register')}}">
+                    @if($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="error-alert">
+                            {{$error}}
+                        </div>
+                    @endforeach
+                    @endif
+                    @csrf
+                    <div class="form-row">
+                        <div class="form-group">
+                            <div class="form-input">
+                                <label for="first_name" class="required">First name</label>
+                                <input type="text" name="first_name" id="first_name" />
+                            </div>
+                            <div class="form-input">
+                                <label for="last_name" class="required">Last name</label>
+                                <input type="text" name="last_name" id="last_name" />
+                            </div>
+                            <div class="form-input">
+                                <label for="email" class="required">Email</label>
+                                <input type="text" name="email" id="email" />
+                            </div>
+                            <div class="form-input">
+                                <label for="contact" class="required">Phone number</label>
+                                <input type="text" name="contact" id="contact" />
+                            </div>
+                            <div class="form-input">
+                                <label for="nid" class="required">NID Number</label>
+                                <input type="text" name="nid" id="nid" />
+                            </div>
+                            <div class="form-input">
+                                <label for="dob" class="required">Date Of Birth</label>
+                                <input type="date" name="dob" id="dob" />
+                            </div>
+                            <div class="form-input">
+                                <label for="address" class="required">Contact Address</label>
+                                <input type="text" name="address" id="address" />
+                            </div>
+                            <div class="form-input">
+                                <label for="blood_group" class="required">Blood Group</label>
+                                <input type="text" name="blood_group" id="blood_group" />
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="form-select">
+                                <div class="label-flex">
+                                    <label for="batch">Batch No</label>
+                                    <a href="#" class="form-link">Batch detail</a>
+                                </div>
+                                <div class="select-list">
+                                    <input type="hidden" name="batch" id="batch">
+                                    <select name="batch_no" id="batch_no">
+                                        <option disabled selected>Select Batch</option>
+                                        @for ($i=0; $i<=9 ; $i++)
+                                         <option value="{{'202'.$i}}">202{{$i}}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                                <div class="form-input">
+                                    <label for="employeer_name">Employer's / Business Name</label>
+                                    <input type="text" name="employeer_name" id="employee_name" />
+                                </div>
+                                <div class="form-input">
+                                    <label for="chequeno">Designation</label>
+                                    <input type="text" name="designation" id="designation" />
+                                </div>
+                                <div class="form-input">
+                                    <label for="employeer_address">Employer's / Business Address</label>
+                                    <input type="text" name="employeer_address" id="employer_address" />
+                                </div>
+                                <div class="form-input">
+                                    <label for="chequeno">Reference Name</label>
+                                    <input type="text" name="reference" id="reference" />
+                                </div>
+                                <div class="form-input">
+                                    <label for="chequeno">Reference Number</label>
+                                    <input type="text" name="reference_number" id="reference_number" />
+                                </div>
+                                <div class="form-input">
+                                    <label for="chequeno">Password</label>
+                                    <input type="password" name="password" id="password" />
+                                </div>
+                                <div class="form-input">
+                                    <label for="chequeno">Confirm Password</label>
+                                    <input type="password" name="password_confirmation" id="password_confirmation" />
+                                </div>
+                            </div>
+                            <div class="form-radio">
+                                <div class="label-flex">
+                                    <label for="payment">Payment Mode</label>
+                                </div>
+                                <div class="form-radio-group">
+                                    <div class="form-radio-item">
+                                        <input type="radio" name="payment" id="life_member" >
+                                        <label for="life_member">Life Member</label>
+                                        <span class="check"></span>
+                                    </div>
+                                    </div>
+                                <div class="form-radio-group">
+                                    <div class="form-radio-item">
+                                        <input type="radio" name="payment" id="general_member" >
+                                        <label for="general_member">General Member</label>
+                                        <span class="check"></span>
+                                    </div>
+                                    </div>
+                                <div class="form-radio-group">
+                                    <div class="form-radio-item">
+                                        <input type="radio" name="payment" id="donor_member" >
+                                        <label for="donor_member">Donor Member</label>
+                                        <span class="check"></span>
+                                    </div>
+                                    </div>
+                                    <div class="form-radio-group">
+                                    <div class="form-radio-item">
+                                        <input type="radio" name="payment" id="honorary_member">
+                                        <label for="honorary_member">Honorary Member</label>
+                                        <span class="check"></span>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-submit">
+                        <input type="submit" value="Submit" class="submit" id="submit" name="submit" />
+                        {{-- <input type="button" value="Reset" class="submit" id="reset" name="reset" /> --}}
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 @endsection

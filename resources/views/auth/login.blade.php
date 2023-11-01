@@ -1,4 +1,4 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -70,4 +70,45 @@
         </div>
     </div>
 </div>
+@endsection --}}
+
+@extends('frontend.partials.app')
+@section('content')
+
+<div class="main">
+
+    <div class="container">
+        <div class="signup-content">
+            <div class="signup-img">
+                <img src="{{asset('/frontend/images/CUMA-Logo.png')}}" alt="">
+            </div>
+            <div class="signup-form" style="padding:80px!important">
+                <form method="POST" class="register-form" id="register-form" action="{{route('login')}}">
+                    @csrf
+                    <div class="form-row">
+                        <div class="form-group">
+                            <div class="form-input">
+                                <label for="email" class="required">Email</label>
+                                <input type="text" name="email" id="email" />
+                            </div>
+                            <div class="form-input">
+                                <label for="chequeno">Password</label>
+                                <input type="password" name="password" id="password" />
+                            </div>
+                        </div>
+
+                    </div>
+                    {{-- <div class="form-submit"> --}}
+                        <input type="submit" value="Submit" class="submit" id="submit" name="submit" />
+                        {{-- <input type="button" value="Reset" class="submit" id="reset" name="reset" /> --}}
+                    {{-- </div> --}}
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\MembershipDetail;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -49,9 +50,22 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        // dd($data);
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'contact' => ['required', 'string', 'max:11', 'unique:users'],
+            'nid' => ['required', 'string'],
+            'dob' => ['required', 'string'],
+            'address' => ['required', 'string'],
+            'blood_group' => ['nullable', 'string'],
+            'batch' => ['required', 'string'],
+            'employeer_name' => ['nullable', 'string'],
+            'designation' => ['nullable', 'string'],
+            'employeer_address' => ['nullable', 'string'],
+            'reference' => ['nullable', 'string'],
+            'reference_number' => ['nullable', 'string'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -64,10 +78,32 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $createUser = User::create([
+            'name' => $data['first_name']." ".$data['last_name'],
             'email' => $data['email'],
+            'contact' => $data['contact'],
             'password' => Hash::make($data['password']),
         ]);
+
+        if($createUser) {
+            $membershipDetailsArray = [
+                'first_name' => $data['first_name'],
+                'last_name' => $data['last_name'],
+                'nid' => $data['nid'],
+                'dob' => $data['dob'],
+                'batch' => $data['batch'],
+                'address' => $data['address'],
+                'blood_group' => $data['blood_group'],
+                'employeer_name' => $data['employeer_name'],
+                'designation' => $data['designation'],
+                'employeer_address' => $data['employeer_address'],
+                'reference' => $data['reference'],
+                'reference_number' => $data['reference_number'],
+                'user_id' => $createUser->id,
+            ];
+            if(MembershipDetail::createNewMember($membershipDetailsArray)) {
+                return $createUser;
+            }
+        }
     }
 }
