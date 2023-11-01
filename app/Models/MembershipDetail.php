@@ -35,9 +35,18 @@ class MembershipDetail extends Model
         return self::create($data);
     }
 
-    public function getMemberList(array|null $values = null, $from = null, $to = null, $order = "DESC", $limit = null)
+    /**
+     * @param null $limit
+     * @param array|null|null $values
+     * @param null $from
+     * @param null $to
+     * @param string $order
+     *
+     * @return [type]
+     */
+    public function getMemberList($limit = null, array|null $values = null, $from = null, $to = null, $order = "DESC")
     {
-        $data = $this->orderBy("updated_at", $order);
+        $data = $this->with("user")->orderBy("updated_at", $order);
 
         $data->when($values, function($q) use ($values){
             $q->get($values);
@@ -48,5 +57,10 @@ class MembershipDetail extends Model
         });
 
         return $data->get()->toArray();
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

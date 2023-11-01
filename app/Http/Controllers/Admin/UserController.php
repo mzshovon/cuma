@@ -6,28 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\admin\CreateUserRequest;
 use App\Http\Requests\admin\UpdateUserRequest;
 use App\Models\User;
-use App\Repositories\UserServiceRepositoryInterface;
-use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    use ApiResponser;
-
-    private UserServiceRepositoryInterface $repo;
-
-    const USER_VIEW_PAGE_TITLE = "List Of Users";
-
-    public function __construct(UserServiceRepositoryInterface $repo){
-        $this->repo = $repo;
-    }
-
     public function getUsers(Request $request){
         try {
-            $data['users'] = $this->repo->getUsersInfo();
-            $data['title'] = self::USER_VIEW_PAGE_TITLE;
+            // $data['users'] = $this->repo->getUsersInfo();
+            // $data['title'] = self::USER_VIEW_PAGE_TITLE;
             $data['roles'] = Role::all();
             return view('admin.user.index', $data);
 
@@ -81,5 +69,10 @@ class UserController extends Controller
             $user->assignRole([$request->role_id]);
         }
         return back()->with('success', 'Role assigned successfully.');
+    }
+
+    public function profile()
+    {
+        dd(true);
     }
 }

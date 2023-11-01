@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laratrust\Traits\LaratrustUserTrait;
 
 class User extends Authenticatable
 {
+    use LaratrustUserTrait;
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
@@ -42,4 +44,25 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function members()
+    {
+        return $this->hasOne(MembershipDetail::class);
+    }
+
+    public function getUsersList($limit = null, array|null $values = null, $from = null, $to = null, $order = "DESC")
+    {
+        $data = $this->with("members")->orderBy("updated_at", $order);
+
+        $data->when($values, function($q) use ($values){
+            $q->get($values);
+        })->when($from, function($q) use ($from, $to){
+            $q->whereBetween("updated_at", [$from, $to]);
+        })->when($limit, function($q) use ($limit){
+            $q->take($limit);
+        });
+
+        return $data->get()->toArray();
+    }
+
 }

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Frontend\LandingPageController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [HomeController::class, 'dashboard'])->name('admin.dashboard.begin');
+Route::get('/', [LoginController::class, 'showLoginForm'])->name('portal.login');
 Route::get('/register', [LandingPageController::class, 'viewLandingPage'])->name('registration');
 
 Auth::routes();
@@ -65,6 +67,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         Route::delete('/delete/{userId}', [UserController::class, 'deleteUser'])->name('deleteUser');
         // Role assign to user
         Route::post('/assign-role', [UserController::class, 'assignRoleToUser'])->name('assignRoleToUser');
+    });
+    // User routes
+    Route::group(['prefix' => 'user-profile'], function() {
+        Route::get('/', [UserController::class, 'profile'])->name('profile');
     });
 
     Route::group(['prefix' => 'error'], function() {

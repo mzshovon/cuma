@@ -15,26 +15,31 @@
       </div>
 
       <div class="card-body">
-        <h5 class="card-title">Recent Sales <span>| Today</span></h5>
+        <h5 class="card-title">Recent Registered</h5>
 
         <table class="table table-borderless datatable">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Customer</th>
-              <th scope="col">Product</th>
-              <th scope="col">Price</th>
-              <th scope="col">Status</th>
+              <th scope="col">Name</th>
+              <th scope="col">Contact</th>
+              <th scope="col">Email</th>
+              <th scope="col">Registered At</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row"><a href="#">#2457</a></th>
-              <td>Brandon Jacob</td>
-              <td><a href="#" class="text-primary">At praesentium minu</a></td>
-              <td>$64</td>
-              <td><span class="badge bg-success">Approved</span></td>
-            </tr>
+            @forelse ($members as $member)
+                <tr>
+                    <th scope="row"><a href="#">{{$member['id']}}</a></th>
+                    <td>{{$member['name']}}</td>
+                    <td>{{$member['contact']}}</td>
+                    <td>{{$member['email']}}</td>
+                    <td>{{ \Carbon\Carbon::parse($member['created_at'])->format("d, M Y")}}</td>
+                </tr>
+            @empty
+
+            @endforelse
+
           </tbody>
         </table>
 
