@@ -165,8 +165,13 @@
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Batch</label>
                       <div class="col-md-8 col-lg-9">
                         <select class="form-select" name="batch" aria-label="Default select example">
-                            @for ($i=0; $i<=9; $i++ )
-                                <option value="{{"202".$i}}" {{auth()->user()->members->batch == "202".$i ? "selected" : ""}}>{{"202".$i}}</option>
+                            @for ($i=1; $i<=50; $i++ )
+                                @if (in_array($i, [24,25,26]))
+                                    <option value="{{"Batch ".$i. " (MBA)"}}" {{auth()->user()->members->batch == "Batch ".$i. " (MBA)" ? "selected" : ""}}>{{"Batch ".$i. " (MBA)"}}</option>
+                                    <option value="{{"Batch ".$i. " (M.Com)"}}" {{auth()->user()->members->batch == "Batch ".$i. " (M.Com)" ? "selected" : ""}}>{{"Batch ".$i. "(M.Com)"}}</option>
+                                @else
+                                    <option value="{{"Batch ".$i}}" {{auth()->user()->members->batch == "Batch ".$i ? "selected" : ""}}>{{"Batch ".$i}}</option>
+                                @endif
                             @endfor
                       </select>
                       </div>

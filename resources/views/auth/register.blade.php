@@ -142,10 +142,15 @@
                                 </div>
                                 <div class="select-list">
                                     <input type="hidden" name="batch" id="batch">
-                                    <select name="batch_no" id="batch_no">
+                                    <select name="batch" id="batch-select">
                                         <option disabled selected>Select Batch</option>
-                                        @for ($i=0; $i<=9 ; $i++)
-                                         <option value="{{'202'.$i}}">202{{$i}}</option>
+                                        @for ($i=1; $i<=50 ; $i++)
+                                            @if (in_array($i, [24,25,26]))
+                                                <option value="{{"Batch ".$i. " (MBA)"}}">{{"Batch ".$i. " (MBA)"}}</option>
+                                                <option value="{{"Batch ".$i. " (M.Com)"}}">{{"Batch ".$i. "(M.Com)"}}</option>
+                                            @else
+                                                <option value="{{'Batch '.$i}}" >Batch {{$i}}</option>
+                                            @endif
                                         @endfor
                                     </select>
                                 </div>
@@ -171,18 +176,19 @@
                                     <input type="text" name="reference_number" id="reference_number" />
                                 </div>
                                 <div class="form-input">
-                                    <label for="chequeno">Password</label>
+                                    <label for="password" class="required">Password</label>
                                     <input type="password" name="password" id="password" />
+                                    <small style="color: grey;font-style:italic">** Password must be at least 8 characters **</small>
                                 </div>
                                 <div class="form-input">
-                                    <label for="chequeno">Confirm Password</label>
-                                    <input type="password" name="password_confirmation" id="password_confirmation" />
+                                    <label for="confirm_password" class="required">Confirm Password</label>
+                                    <input type="password" name="confirm_password" id="confirm_password" />
                                 </div>
                             </div>
                             <input type="hidden" name="payment" id="payment" />
                             <div class="form-radio">
                                 <div class="label-flex">
-                                    <label for="payment">Payment Mode</label>
+                                    <label for="payment" class="required">Payment Mode</label>
                                 </div>
                                 <div class="form-radio-group">
                                     <div class="form-radio-item">

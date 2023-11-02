@@ -82,17 +82,18 @@
                                     <input type="text" name="reference_number" id="reference_number" />
                                 </div>
                                 <div class="form-input">
-                                    <label for="chequeno">Password</label>
+                                    <label for="password" class="required">Password</label>
                                     <input type="password" name="password" id="password" />
+                                    <small style="color: red">Password must be at least 8 characters</small>
                                 </div>
                                 <div class="form-input">
-                                    <label for="chequeno">Confirm Password</label>
+                                    <label for="confirm_password" class="required">Confirm Password</label>
                                     <input type="password" name="confirm_password" id="confirm_password" />
                                 </div>
                             </div>
                             <div class="form-radio">
                                 <div class="label-flex">
-                                    <label for="payment">Payment Mode</label>
+                                    <label for="payment" class="required">Payment Mode</label>
                                 </div>
                                 <div class="form-radio-group">
                                     <div class="form-radio-item">
