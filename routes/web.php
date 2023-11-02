@@ -31,10 +31,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
     // // Permission routes
-    // Route::group(['prefix' => 'permissions'], function() {
-    //     Route::get('/', [PermissionsController::class, 'index'])->name('permissionsList');
-    //     Route::post('/store', [PermissionsController::class, 'store'])->name('storePermissions');
-    // });
+    Route::group(['prefix' => 'contact'], function() {
+        Route::get('/', [PermissionsController::class, 'index'])->name('permissionsList');
+        Route::post('/store', [PermissionsController::class, 'store'])->name('storePermissions');
+    });
 
     // // Roles routes
     // Route::group(['prefix' => 'roles'], function() {

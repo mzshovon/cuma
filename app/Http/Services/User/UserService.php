@@ -47,6 +47,12 @@ class UserService {
     public function updateUserInfoById(int $userId, $memberData, $userData)
     {
         try {
+            if($memberData['image_path']){
+                $dirName = storeOrUpdateImage("storage/img/profile/$userId/", $memberData['image_path']);
+                $memberData['image_path'] = $dirName;
+            } else {
+                unset($memberData['image_path']);
+            }
             if ($this->user::updateUserByParam("id", $userId, $userData)) {
                 if ($this->membershipDetail::updateMemberByParam("user_id", $userId, $memberData)) {
                     return ["success", "Profile Info Updated Sucessfully!"];

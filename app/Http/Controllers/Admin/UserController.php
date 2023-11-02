@@ -103,6 +103,7 @@ class UserController extends Controller
         $memberData['employeer_address'] = $request->employeer_address;
         $memberData['reference'] = $request->reference;
         $memberData['reference_number'] = $request->reference_number;
+        $memberData['image_path'] = $request->profile_image ?? null;
         [$message, $status] = $userService->updateUserInfoById($userId, $memberData, $userData);
         Session::put($message, $status);
         return redirect("/admin/user-profile");

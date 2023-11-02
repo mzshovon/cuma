@@ -39,6 +39,7 @@ class ProfileUpdateRequest extends FormRequest
             'employeer_address' => ['nullable', 'string'],
             'reference' => ['nullable', 'string'],
             'reference_number' => ['nullable', 'string'],
+            'profile_image' => ['nullable', 'image', 'mimes:png,jpg,jpeg','max:1000'],
         ];
     }
 }

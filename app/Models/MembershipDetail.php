@@ -29,6 +29,7 @@ class MembershipDetail extends Model
         'reference_number',
         'user_id',
         'payment',
+        'image_path',
     ];
 
     public function user()

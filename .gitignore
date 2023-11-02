@@ -3,6 +3,7 @@
 /public/frontend
 /public/storage
 /storage/*.key
+/storage/img/
 /vendor
 .env
 .env.backup
