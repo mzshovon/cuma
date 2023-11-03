@@ -38,6 +38,13 @@
         <li class="nav-item">
             <a class="nav-link {{ in_array($route, ['admin.contact']) ? 'nav-item-active-a' : 'collapsed' }}"
                 href="{{ route('admin.contact') }}">
+                <i class="bi bi-cash"></i>
+                <span>Payment</span>
+            </a>
+        </li><!-- End Dashboard Nav -->
+        <li class="nav-item">
+            <a class="nav-link {{ in_array($route, ['admin.contact']) ? 'nav-item-active-a' : 'collapsed' }}"
+                href="{{ route('admin.contact') }}">
                 <i class="bi bi-envelope"></i>
                 <span>Contact Us</span>
             </a>
