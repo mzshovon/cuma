@@ -14,7 +14,7 @@ class UtilitiesService {
     public function getContactUsData()
     {
         $contact = new ContactUs();
-        $userId = getUserInfo()->hasRole("user") ? getUserInfo()->id : null;
+        $userId = getUserInfo()->hasRole("superadmin") ? null : getUserInfo()->id;
         return $contact->getContacts($userId);
     }
 

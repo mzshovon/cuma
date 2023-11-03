@@ -48,7 +48,7 @@ class UserService {
     {
         try {
             if($memberData['image_path']){
-                $dirName = storeOrUpdateImage("storage/img/profile/$userId/", $memberData['image_path']);
+                $dirName = storeOrUpdateImage("storage/img/profile/$userId/", $memberData['image_path'], 'profile');
                 $memberData['image_path'] = $dirName;
             } else {
                 unset($memberData['image_path']);

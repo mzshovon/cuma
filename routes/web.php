@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\UtilityController;
 use App\Http\Controllers\Auth\LoginController;
@@ -72,6 +73,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     Route::group(['prefix' => 'contact'], function() {
         Route::get('/', [UtilityController::class, 'contactUsView'])->name('contact');
         Route::post('/', [UtilityController::class, 'storeAndSendContactMessage'])->name('contact.submit');
+    });
+
+    Route::group(['prefix' => '[payment]'], function() {
+        Route::get('/', [PaymentController::class, 'view'])->name('payment');
+        Route::post('/', [PaymentController::class, 'store'])->name('payment.store');
+        Route::post('/update/{id}', [PaymentController::class, 'update'])->name('payment.update');
+        Route::get('/updateStatus/{id}/{status}', [PaymentController::class, 'updateStatus'])->name('payment.update.status');
     });
 
     Route::group(['prefix' => 'error'], function() {

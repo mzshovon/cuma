@@ -36,8 +36,8 @@
             </li><!-- End Dashboard Nav -->
         @endif
         <li class="nav-item">
-            <a class="nav-link {{ in_array($route, ['admin.contact']) ? 'nav-item-active-a' : 'collapsed' }}"
-                href="{{ route('admin.contact') }}">
+            <a class="nav-link {{ in_array($route, ['admin.payment']) ? 'nav-item-active-a' : 'collapsed' }}"
+                href="{{ route('admin.payment') }}">
                 <i class="bi bi-cash"></i>
                 <span>Payment</span>
             </a>

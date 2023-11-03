@@ -38,15 +38,17 @@ if (!function_exists('storeOrUpdateImage')) {
     /**
      * @return mixed
      */
-    function storeOrUpdateImage($filePath, $file)
+    function storeOrUpdateImage($filePath, $file, $fileNamePrefix, $unlinkExisting = true)
     {
         if(!File::exists($filePath)) {
             mkdir($filePath, 0777, true);
         }
-        $fileName = "profile_image.".$file->getClientOriginalExtension();
+        $fileName = "$fileNamePrefix.".$file->getClientOriginalExtension();
         $dirPath = $filePath . $fileName;
-        if (File::exists($dirPath)) {
-            File::deleteDirectory($dirPath);
+        if($unlinkExisting) {
+            if (File::exists($dirPath)) {
+                File::deleteDirectory($dirPath);
+            }
         }
         file_put_contents($dirPath, file_get_contents($file));
         return $dirPath;
