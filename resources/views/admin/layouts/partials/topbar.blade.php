@@ -8,7 +8,7 @@
       <div class="d-flex align-items-center justify-content-between">
         <a href="{{route('admin.dashboard')}}" class="logo d-flex align-items-center">
           <img src="/cuma/public/frontend/images/CUMA-Logo.png" alt="">
-          <span class="d-none d-lg-block">{{env('APP_NAME')}}</span>
+          <span class="d-none d-lg-block">{{config('app.name')}}</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
       </div><!-- End Logo -->

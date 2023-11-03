@@ -4,6 +4,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 
 if (!function_exists('customPaginate')) {
     /**
@@ -49,6 +50,27 @@ if (!function_exists('storeOrUpdateImage')) {
         }
         file_put_contents($dirPath, file_get_contents($file));
         return $dirPath;
+    }
+}
+
+if (!function_exists('sendMailWithTemplate')) {
+    /**
+     * @return mixed
+     */
+    function sendMailWithTemplate($data, $template, $to, $cc = null)
+    {
+        $subject = $data['subject'];
+        $message = $data["message"];
+        unset($data['message']);
+        $data['mailMessage'] = $message;
+        Mail::send($template, $data, function ($mail) use ($subject, $to, $cc) {
+            $mail->to($to);
+            if($cc){
+                $mail->cc($cc);
+            }
+            $mail->subject($subject);
+        });
+        return true;
     }
 }
 

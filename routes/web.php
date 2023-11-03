@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\UtilityController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Frontend\LandingPageController;
 use Illuminate\Support\Facades\Route;
@@ -29,13 +30,6 @@ Auth::routes();
 // admin routes
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], function() {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
-
-    // // Permission routes
-    Route::group(['prefix' => 'contact'], function() {
-        Route::get('/', [PermissionsController::class, 'index'])->name('permissionsList');
-        Route::post('/store', [PermissionsController::class, 'store'])->name('storePermissions');
-    });
-
     // // Roles routes
     // Route::group(['prefix' => 'roles'], function() {
     //     Route::get('/', [RolesController::class, 'index'])->name('rolesList');
@@ -73,6 +67,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         Route::get('/', [UserController::class, 'profile'])->name('profile');
         Route::post('/update', [UserController::class, 'profileUpdate'])->name('profile.uddate');
         Route::post('/reset/password', [UserController::class, 'resetPassword'])->name('profile.reset-password');
+    });
+
+    Route::group(['prefix' => 'contact'], function() {
+        Route::get('/', [UtilityController::class, 'contactUsView'])->name('contact');
+        Route::post('/', [UtilityController::class, 'storeAndSendContactMessage'])->name('contact.submit');
     });
 
     Route::group(['prefix' => 'error'], function() {
