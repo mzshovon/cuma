@@ -2,7 +2,9 @@
 
 namespace App\Http\Services\Dashboard;
 
+use App\Models\ContactUs;
 use App\Models\MembershipDetail;
+use App\Models\Payment;
 use App\Models\User;
 
 class DashboardService {
@@ -19,6 +21,16 @@ class DashboardService {
     {
         $member = new User();
         return $member->count();
+    }
+    public function getPaymentCount()
+    {
+        $payment = new Payment();
+        return $payment->count();
+    }
+    public function getContactCount()
+    {
+        $contact = new ContactUs();
+        return $contact->count();
     }
 
 }

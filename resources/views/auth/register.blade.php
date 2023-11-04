@@ -129,8 +129,26 @@
                                 <input type="text" name="address" id="address" />
                             </div>
                             <div class="form-input">
-                                <label for="blood_group" class="required">Blood Group</label>
-                                <input type="text" name="blood_group" id="blood_group" />
+                                <label for="profile_image" class="required">Upload Profile Image</label>
+                                <input type="file" name="profile_image" id="profile_image" />
+                            </div>
+                            <div class="form-select">
+                                <div class="label-flex">
+                                    <label for="batch">Blood Group</label>
+                                </div>
+                                <div class="select-list">
+                                    <select name="blood_group" id="batch-select">
+                                        <option disabled selected>Select Blood Group</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                    </select>
+                                </div>
                             </div>
 
                         </div>
@@ -182,7 +200,7 @@
                                 </div>
                                 <div class="form-input">
                                     <label for="confirm_password" class="required">Confirm Password</label>
-                                    <input type="password" name="confirm_password" id="confirm_password" />
+                                    <input type="password" name="password_confirmation" id="confirm_password" />
                                 </div>
                             </div>
                             <input type="hidden" name="payment" id="payment" />

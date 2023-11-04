@@ -193,7 +193,16 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Blood Group</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="blood_group" type="text" class="form-control" id="fullName" value="{{auth()->user()->members->blood_group ?? "N/A"}}">
+                        <select class="form-select" name="blood_group" aria-label="Default select example">
+                            <option value="A+" {{auth()->user()->members->blood_group == "A+" ? "selected" : ""}}>A+</option>
+                            <option value="A-" {{auth()->user()->members->blood_group == "A-" ? "selected" : ""}}>A-</option>
+                            <option value="B+" {{auth()->user()->members->blood_group == "B+" ? "selected" : ""}}>B+</option>
+                            <option value="B-" {{auth()->user()->members->blood_group == "B-" ? "selected" : ""}}>B-</option>
+                            <option value="O+" {{auth()->user()->members->blood_group == "O+" ? "selected" : ""}}>O+</option>
+                            <option value="O-" {{auth()->user()->members->blood_group == "O-" ? "selected" : ""}}>O-</option>
+                            <option value="AB+" {{auth()->user()->members->blood_group == "AB+" ? "selected" : ""}}>AB+</option>
+                            <option value="AB-" {{auth()->user()->members->blood_group == "AB-" ? "selected" : ""}}>AB-</option>
+                      </select>
                       </div>
                     </div>
 

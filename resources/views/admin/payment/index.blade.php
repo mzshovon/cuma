@@ -3,7 +3,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Data</h1>
+            <h1>{{ $title }}</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
@@ -93,15 +93,41 @@
                                     <div class="modal-body">
                                         <input type="hidden" name="id" id="id_user">
                                         <div class="modal-body">
-                                            <ul class="list-group">
+                                            {{-- <ul class="list-group">
                                                 <li class="list-group-item"><img src="https://freelogopng.com/images/all_img/1656235223bkash-logo.png" style="height: 20px;width:20px"/> Bkash Payment Number: 01XXXXXXXXX</li>
                                                 <li class="list-group-item"><i class="bi bi-collection me-1 text-primary"></i> Bank Payment Number: 1XXX34XXXXXXXX </li>
-                                              </ul>,
+                                              </ul> --}}
+                                              {{-- <div class="card-body">
+                                                <h5 class="card-title">Vertical Pills Tabs</h5> --}}
+
+                                                <!-- Vertical Pills Tabs -->
+                                                <div class="d-flex align-items-start">
+                                                  <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                                                    <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true" tabindex="-1" ><img src="https://freelogopng.com/images/all_img/1656235223bkash-logo.png" style="height: 20px;width:20px"/> Bkash</button>
+                                                    <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" ><i class="bi bi-collection me-1 text-black"></i> Bank</button>
+                                                  </div>
+                                                  <div class="tab-content" id="v-pills-tabContent">
+                                                    <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                                        Baksh No.: 01713-100850 (Personal)
+                                                        <br><b><i>* (For Bkash Payemnt - Member should pay with Membership Fee plus Bkash Charge.)</i></b>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                                                        <b>A/C Name:</b> CTG. UNIVERSITY MANAGEMENT ASSOCIATION <br>
+                                                        <b>A/C. #</b> 4110-756757-300<br>
+                                                        <b>Bank :</b> AB BANK LIMITED<br>
+                                                        <b>Bank Branch Name:</b> CDA AVENUE BRANCH<br>
+                                                        CHATTOGRAM
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                                <!-- End Vertical Pills Tabs -->
+
+                                              {{-- </div> --}}
                                               <br>
                                             <select name="payment_channel" id="id_payment_channel" class="form-control">
                                                 <option id="option_idBkash" value="Bkash">Bkash</option>
                                                 {{-- <option id="option_idNagad" value="Nagad">Nagad</option> --}}
-                                                <option id="option_idBEFTN" value="BEFTN">BEFTN</option>
+                                                <option id="option_idBEFTN" value="BANK">BEFTN</option>
                                                 <option id="option_idCheque" value="Cheque">Cheque</option>
                                                 {{-- <option id="option_idPO" value="PO">PO</option> --}}
                                             </select>

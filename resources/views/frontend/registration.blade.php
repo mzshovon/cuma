@@ -88,7 +88,7 @@
                                 </div>
                                 <div class="form-input">
                                     <label for="confirm_password" class="required">Confirm Password</label>
-                                    <input type="password" name="confirm_password" id="confirm_password" />
+                                    <input type="password" name="password_confirmation" id="confirm_password" />
                                 </div>
                             </div>
                             <div class="form-radio">

@@ -7,7 +7,7 @@
 
       <div class="d-flex align-items-center justify-content-between">
         <a href="{{route('admin.dashboard')}}" class="logo d-flex align-items-center">
-          <img src="/cuma/public/frontend/images/CUMA-Logo.png" alt="">
+          <img src="{{URL::to('/')}}/public/frontend/images/CUMA-Logo.png" alt="">
           <span class="d-none d-lg-block">{{config('app.name')}}</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -35,10 +35,9 @@
           <li class="nav-item dropdown pe-3">
 
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-              <img src={{URL::to("/") ."/". auth()->user()->members->image_path ?? URL::to("/") .'/public/frontend/images/CUMA-Logo.png'}} alt="Profile" class="rounded-circle">
+              <img src={{auth()->user()->members->image_path ? URL::to("/") ."/". auth()->user()->members->image_path : URL::to("/") ."/public/frontend/images/CUMA-Logo.png"}} alt="Profile" class="rounded-circle">
               <span class="d-none d-md-block dropdown-toggle ps-2">{{auth()->user()->name}}</span>
-            </a><!-- End Profile Iamge Icon -->
-
+            </a>
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li class="dropdown-header">
                 <h6>{{auth()->user()->name}}</h6>
@@ -58,12 +57,12 @@
                 <hr class="dropdown-divider">
               </li>
 
-              {{-- <li>
-                <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="{{route('admin.contact')}}">
                   <i class="bi bi-question-circle"></i>
                   <span>Need Help?</span>
                 </a>
-              </li> --}}
+              </li>
               <li>
                 <hr class="dropdown-divider">
               </li>

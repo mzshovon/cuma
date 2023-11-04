@@ -3,7 +3,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Data</h1>
+            <h1>{{ $title }}</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>

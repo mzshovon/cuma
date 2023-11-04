@@ -94,6 +94,7 @@
                 <div class="card-body pb-0">
                   <img src="https://cdn.dribbble.com/users/1223630/screenshots/8115260/media/8145a871d9c4d67ec06e047ccc6574b4.gif"/>
                   <a href="{{route('admin.profile')}}" class="btn btn-outline-primary btn-lg"> Visit profile </a>
+                  <a href="{{route('admin.contact')}}" class="btn btn-outline-primary btn-lg"> Place your ticket </a>
                   <a href="{{route('admin.profile')}}" class="btn btn-outline-primary btn-lg"> Change password </a>
                 </div>
               </div><!-- End Website Traffic -->
