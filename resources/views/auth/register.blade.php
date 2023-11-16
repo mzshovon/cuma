@@ -79,9 +79,15 @@
 
 @extends('frontend.partials.app')
 @section('content')
+<img id="myImg" src="" hidden alt="Snow" style="width:100%;max-width:300px">
 
+<!-- The Modal -->
+    <div id="myModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="img01">
+    <div id="caption"></div>
+    </div>
 <div class="main">
-
     <div class="container">
         <div class="signup-content">
             <div class="signup-img">
@@ -89,7 +95,7 @@
             </div>
             <div class="signup-form">
 
-                <form method="POST" class="register-form" id="register-form" action="{{route('register')}}">
+                <form method="POST" class="register-form" id="register-form" action="{{route('register')}}" enctype="multipart/form-data">
                     @if($errors->any())
                     @foreach ($errors->all() as $error)
                         <div class="error-alert">
@@ -250,6 +256,40 @@
             </div>
         </div>
     </div>
-
 </div>
+@push('script')
+
+<script>
+    var modal = document.getElementById("myModal");
+    var modalImg = document.getElementById("img01");
+    modal.style.display = "block";
+    if(screen.width < 700) {
+        modalImg.src = "{{URL::to('/').'/public/frontend/images/Payment Details Mobile. Ver..png'}}";
+        modalImg.style.width = "350px";
+        modalImg.style.height = "550px";
+    } else {
+        modalImg.src = "{{URL::to('/').'/public/frontend/images/Payment Details Dek. Ver..png'}}";
+    }
+
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+    var main = document.getElementsByClassName("main")[0];
+
+    main.style.opacity = "0.5";
+
+    span.onclick = function() {
+        modal.style.display = "none";
+        main.style.opacity = "1";
+    }
+
+    // modal.onclick = function() {
+    //     modal.style.display = "none";
+    //     main.style.opacity = "1";
+    // }
+
+</script>
+
+@endpush
 @endsection
+

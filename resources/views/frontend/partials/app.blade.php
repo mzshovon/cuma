@@ -28,6 +28,6 @@
 <script src="{{URL::to('/')}}/public/frontend/vendor/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="{{URL::to('/')}}/public/frontend/vendor/jquery-validation/dist/additional-methods.min.js"></script>
 <script src="{{URL::to('/')}}/public/frontend/js/main.js"></script>
-
+@stack('script')
 </body>
 </html>

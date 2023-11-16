@@ -67,6 +67,7 @@ class RegisterController extends Controller
             'reference_number' => ['nullable', 'string'],
             'payment' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'profile_image' => ['nullable', 'image', 'mimes:png,jpg,jpeg','max:1000'],
         ]);
     }
 
@@ -101,7 +102,16 @@ class RegisterController extends Controller
                 'reference_number' => $data['reference_number'],
                 'payment' => $data['payment'],
                 'user_id' => $createUser->id,
+                'image_path' => $data['profile_image'] ?? null,
             ];
+            if($membershipDetailsArray['image_path']) {
+                if($membershipDetailsArray['image_path']){
+                    $dirName = storeOrUpdateImage("storage/img/profile/$createUser->id/", $membershipDetailsArray['image_path'], 'profile');
+                    $membershipDetailsArray['image_path'] = $dirName;
+                } else {
+                    unset($membershipDetailsArray['image_path']);
+                }
+            }
             if(MembershipDetail::createNewMember($membershipDetailsArray)) {
                 return $createUser;
             }
