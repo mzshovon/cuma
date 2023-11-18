@@ -31,7 +31,12 @@
             @forelse ($members as $member)
                 <tr>
                     <th scope="row"><a href="#">{{$member['id']}}</a></th>
-                    <td>{{$member['name']}}</td>
+                    <td>
+                        @if ($member['members']['image_path'])
+                            <img src="{{URL::to("/") ."/". $member['members']['image_path']}}" alt="Profile" class="rounded-circle" style="height: 30px;width:30px">
+                        @endif
+                        {{$member['name']}}
+                    </td>
                     <td>{{$member['contact']}}</td>
                     <td>{{$member['email']}}</td>
                     <td>{{ \Carbon\Carbon::parse($member['created_at'])->format("d, M Y")}}</td>

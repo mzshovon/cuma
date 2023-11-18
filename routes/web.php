@@ -57,11 +57,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // User routes
     Route::group(['prefix' => 'member'], function() {
         Route::get('/', [UserController::class, 'getUsers'])->name('usersList');
-        Route::post('/store', [UserController::class, 'createUser'])->name('createUser');
-        Route::post('/update/{userId}', [UserController::class, 'updateUser'])->name('updateUser');
+        Route::get('/create', [UserController::class, 'createUser'])->name('createUser');
+        Route::post('/store', [UserController::class, 'storeUser'])->name('storeUser');
+        Route::get('/edit/{userId}', [UserController::class, 'edituser'])->name('edituser');
+        Route::post('/update', [UserController::class, 'updateUser'])->name('updateUser');
         Route::delete('/delete/{userId}', [UserController::class, 'deleteUser'])->name('deleteUser');
         // Role assign to user
-        Route::post('/assign-role', [UserController::class, 'assignRoleToUser'])->name('assignRoleToUser');
+        Route::post('/assign-membersip-id', [UserController::class, 'assignMembershipId'])->name('assignMembershipIdToUser');
     });
     // User routes
     Route::group(['prefix' => 'user-profile'], function() {

@@ -6,7 +6,7 @@
             <h1>{{ $title }}</h1>
             <nav>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{URL::to('/')}}">Home</a></li>
                     <li class="breadcrumb-item">Users</li>
                     <li class="breadcrumb-item active">Data</li>
                 </ol>
@@ -16,12 +16,20 @@
         <section class="section">
             <div class="row">
                 <div class="col-lg-12">
-
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger alert-dismissible fade show">{{ $error }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endforeach
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-10">
-                                    <h5 class="card-title">{{ $title }}</h5>
+                                    <h5 class="card-title">
+                                        {{ $title }}
+                                        <a href="{{route('admin.createUser')}}" class="btn btn-success btn-sm">Add Member</a>
+                                    </h5>
+
                                 </div>
                                 {{-- <div class="col-2">
                                     <h5 class="card-title">
@@ -36,6 +44,7 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Name</th>
+                                        <th scope="col">Membership ID</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Contact</th>
                                         <th scope="col">Payment</th>
@@ -44,13 +53,29 @@
                                         {{-- <th>Assign Role</th> --}}
                                         <th scope="col">Role</th>
                                         <th scope="col">Registered At</th>
+                                        @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
+                                            <th scope="col">Action</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $key => $user)
                                         <tr>
                                             <th scope="row">{{ ++$key }}</th>
-                                            <td>{{ $user['name'] }}</td>
+                                            <td>
+                                                @if ($user['members']['image_path'])
+                                                    <img src="{{URL::to("/") ."/". $user['members']['image_path']}}" alt="Profile" class="rounded-circle" style="height: 30px;width:30px">
+                                                @endif
+                                                {{ $user['name'] }}
+                                            </td>
+                                            <td>
+                                                @if (!$user['members']['membership_id'])
+                                                    <a href="javascript:void(0)" class="btn btn-outline-primary btn-sm"
+                                                    onclick="assignRoleModalShow(`{{ $user['members']['id'] }}`, null)">N/A. Update?</a>
+                                                @else
+                                                    <button class="btn btn-success btn-sm"> {{$user['members']['membership_id']}} </button>
+                                                @endif
+                                            </td>
                                             <td>{{ $user['email'] }}</td>
                                             <td>{{ $user['contact'] }}</td>
                                             <td>{{ $user['members']['payment'] }}</td>
@@ -58,7 +83,13 @@
                                             <td>{{ $user['members']['blood_group'] }}</td>
                                             <td>{{ isset($user['roles'][0]) ? $user['roles'][0]['name'] : "user" }}</td>
                                             <td>{{ \Carbon\Carbon::parse($user['updated_at'])->format("d, M Y") }}</td>
-
+                                            @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
+                                                <td>
+                                                    <a href="{{route('admin.edituser',['userId' => $user['id']])}}" class="btn btn-outline-info btn-sm">
+                                                        Update
+                                                    </a>
+                                                </td>
+                                            @endif
                                             {{-- <td>
                                                 @php
                                                     $userRole = App\Models\User::userRole($user['id']);
@@ -109,29 +140,24 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title">Assign role to user</h5>
+                                    <h5 class="modal-title">Assign membership id to user</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
-                                <form action="{{ route('admin.assignRoleToUser') }}"
+                                <div class="modal-body">
+                                <form action="{{ route('admin.assignMembershipIdToUser') }}"
                                     method="POST" class="mx-3">
                                     @csrf
                                     <input type="hidden" name="user_id" id="id_user_id">
-                                    <select name="role_id" id="id_role_id"
-                                        class="form-control" required>
-                                        <option value="">Select a Role</option>
-                                        @foreach ($roles as $role)
-                                            <option id="role_option_id{{ $role->id }}" value="{{ $role->id }}">
-                                                {{ $role->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input class="form-control" type="text" name="membership_id" id="membership_id" placeholder="Input membership id">
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Close</button>
                                         <button type="submit"
-                                            class="btn btn-sm btn-primary light">Submit</button>
+                                            class="btn btn-primary light">Submit</button>
                                     </div>
                                 </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -148,17 +174,16 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('/') }}admin/assets/js/call.js"></script>
     <script>
-        function assignRoleModalShow(userId, roleId) {
+        function assignRoleModalShow(userId, memberbershipId) {
             if(userId == "" || userId == null){
                 return false
             }
-            $("#id_user_id").val(userId);
-            console.log(roleId);
-            if (roleId) {
-                $("#role_option_id" + roleId).prop('selected', true);
+            if (memberbershipId) {
+                $("#membership_id").val(memberbershipId);
             } else {
-                $('#id_role_id').find($('option')).prop('selected', false);
+                $("#membership_id").val('');
             }
+            $("#id_user_id").val(userId);
             $("#role-assign-modal").modal('show')
         }
 

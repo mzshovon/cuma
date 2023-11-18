@@ -17,6 +17,7 @@ class MembershipDetail extends Model
     protected $fillable = [
         'first_name',
         'last_name',
+        'membership_id',
         'nid',
         'dob',
         'batch',

@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\admin\CreateUserRequest;
 use App\Http\Requests\admin\UpdateUserRequest;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\MembershipUpdateRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Services\User\UserService;
 use App\Models\Role;
@@ -31,16 +32,58 @@ class UserController extends Controller
         }
     }
 
-    public function createUser(CreateUserRequest $request){
+    public function createUser(){
         try {
-            $name = $request->name ?? null;
-            $email = $request->email ?? null;
-            $status = $request->status ?? null;
-            [$statusName, $message] = $this->repo->storeUserInfo($name, $email, $status);
-            return redirect()->route('admin.usersList')->with($statusName, $message);
+            $data['title'] = "Add Member";
+            return  view('admin.user.create', $data);
 
         } catch (\Throwable $th) {
             return $th;
+        }
+    }
+
+    public function storeUser(CreateUserRequest $request, UserService $userService){
+        try {
+            $memberData['first_name'] = $request->first_name;
+            $memberData['last_name'] = $request->last_name;
+            $userData['name'] = $request->first_name . " " . $request->last_name;
+            $userData['email'] = $request->email;
+            $userData['contact'] = $request->contact;
+            $memberData['nid'] = $request->nid;
+            $memberData['dob'] = $request->dob;
+            $memberData['address'] = $request->address;
+            $memberData['blood_group'] = $request->blood_group;
+            $memberData['batch'] = $request->batch;
+            $memberData['payment'] = $request->payment;
+            $memberData['employeer_name'] = $request->employeer_name;
+            $memberData['designation'] = $request->designation;
+            $memberData['employeer_address'] = $request->employeer_address;
+            $memberData['reference'] = $request->reference;
+            $memberData['reference_number'] = $request->reference_number;
+            $memberData['image_path'] = $request->profile_image ?? null;
+            $memberData['membership_id'] = $request->membership_id ?? null;
+            // dd($userData, $memberData);
+            [$status, $message] = $userService->createMemberWithUserDetails($memberData, $userData);
+            Session::put($status, $message);
+            return redirect()->route('admin.createUser');
+
+        } catch (\Throwable $th) {
+            return $th;
+        }
+    }
+
+    public function editUser($userId, UserService $userService){
+        try {
+            $data['title'] = "Update Member";
+            $data['user'] = $userService->getUserInfoById($userId);
+            if(!$data['user']) {
+                Session::put("error", "No user found for this id!");
+                return redirect()->route('admin.usersList');
+            }
+            return view('admin.user.edit', $data);
+
+        } catch (\Throwable $th) {
+            return back()->with(500, $th->getMessage());
         }
     }
 
@@ -68,14 +111,13 @@ class UserController extends Controller
         }
     }
 
-    public function assignRoleToUser(Request $request) {
-        if(DB::table('model_has_roles')->where('model_id',$request->user_id)->first()) {
-            DB::table('model_has_roles')->where('model_id',$request->user_id)->update(['role_id'=>$request->role_id]);
-        } else {
-            $user = User::find($request->user_id);
-            $user->assignRole([$request->role_id]);
-        }
-        return back()->with('success', 'Role assigned successfully.');
+    public function assignMembershipId(MembershipUpdateRequest $request, UserService $userService) {
+        $id = $request->user_id;
+        $membership_id = $request->membership_id;
+        [$message, $status] = $userService->assignMemberShipId($id, $membership_id);
+        Session::put($message, $status);
+        return redirect()->route('admin.usersList');
+
     }
 
     public function profile()

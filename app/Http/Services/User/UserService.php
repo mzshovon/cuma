@@ -20,9 +20,21 @@ class UserService {
         return $this->user->getUsersList() ?? [];
     }
 
-    public function getUserInfoById()
+    public function getUserInfoById($userId)
     {
+        return $this->user->getSingleUserByParam("id", $userId) ?? null;
+    }
 
+    public function assignMemberShipId($id, $membership_id)
+    {
+        try {
+            $update = $this->membershipDetail->updateMemberByParam("id", $id, ['membership_id' => $membership_id]);
+            if($update) {
+                return ["success", "Membership ID assigned successfully!"];
+            }
+        } catch (QueryException | Exception $e) {
+            return ["error", "Something Went Wrong. Error: ".$e->getMessage()];
+        }
     }
 
     public function storeUserInfo($name, $email, $status)
@@ -37,6 +49,31 @@ class UserService {
 
             if ($this->user::create($formatForStoreUser)) {
                 return ["success", "User Created Sucessfully!"];
+            }
+
+        } catch (QueryException | Exception $e) {
+            return ["error", "Something Went Wrong. Error: ".$e->getMessage()];
+        }
+    }
+
+    public function createMemberWithUserDetails($memberData, $userData)
+    {
+        try {
+            $userData['password'] = bcrypt($userData['email']);
+            // dd($userData);
+            $createUser = $this->user->createUser($userData);
+            if($createUser) {
+                $userId = $createUser->id;
+                $memberData['user_id'] = $userId;
+                if($memberData['image_path']){
+                    $dirName = storeOrUpdateImage("storage/img/profile/$userId/", $memberData['image_path'], 'profile');
+                    $memberData['image_path'] = $dirName;
+                } else {
+                    unset($memberData['image_path']);
+                }
+                if($this->membershipDetail->createNewMember($memberData)) {
+                    return ["success", "Member created successfully!"];
+                }
             }
 
         } catch (QueryException | Exception $e) {

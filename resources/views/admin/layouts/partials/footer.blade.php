@@ -8,6 +8,6 @@
     <!-- You can delete the links only if you purchased the pro version. -->
     <!-- Licensing information: https://bootstrapmade.com/license/ -->
     <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-    Designed by <a href="#">Shovon</a>
+    Designed & Developed by <a href="https://bento.me/mzshovon" target="_blank">Shovon</a>
   </div>
 </footer><!-- End Footer -->
