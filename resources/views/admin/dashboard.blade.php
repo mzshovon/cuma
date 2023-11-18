@@ -87,15 +87,18 @@
 
         </div><!-- End Right side columns -->
         @else
-        <div class="col-lg-12">
+        <div class="col-lg-6">
               <!-- Website Traffic -->
               <div class="card">
 
-                <div class="card-body pb-0">
+                <div class="card-body">
                   <img src="https://cdn.dribbble.com/users/1223630/screenshots/8115260/media/8145a871d9c4d67ec06e047ccc6574b4.gif"/>
-                  <a href="{{route('admin.profile')}}" class="btn btn-outline-primary btn-lg"> Visit profile </a>
-                  <a href="{{route('admin.contact')}}" class="btn btn-outline-primary btn-lg"> Place your ticket </a>
-                  <a href="{{route('admin.profile')}}" class="btn btn-outline-primary btn-lg"> Change password </a>
+                  <div>
+                    <a href="{{route('admin.profile')}}" class="btn btn-outline-primary btn-lg"> Visit profile </a>
+                    <a href="{{route('admin.payment')}}" class="btn btn-outline-primary btn-lg"> Payment </a>
+                    <a href="{{route('admin.contact')}}" class="btn btn-outline-primary btn-lg"> Place your ticket </a>
+                    <a href="{{route('admin.profile')}}" class="btn btn-outline-primary btn-lg"> Change password </a>
+                  </div>
                 </div>
               </div><!-- End Website Traffic -->
 
@@ -114,6 +117,11 @@
                   </ul>
                 </div>
               </div><!-- End News & Updates -->
+
+            </div><!-- End Right side columns -->
+        <div class="col-lg-6">
+              <!-- Website Traffic -->
+              @include('admin.layouts.partials.topMembers')
 
             </div><!-- End Right side columns -->
         @endif

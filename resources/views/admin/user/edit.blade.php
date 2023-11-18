@@ -3,7 +3,12 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>{{$title}}</h1>
+      <h1>
+        {{$title}}
+        @if ($user['members']['image_path'])
+            <img src="{{URL::to("/") ."/". $user['members']['image_path']}}" alt="Profile" class="rounded-circle" style="height:40px;width:40px">
+        @endif
+    </h1>
     </div><!-- End Page Title -->
 
     <section class="section profile">
@@ -21,12 +26,15 @@
                 <h4 class="text-center">User Details</h4>
                 <hr>
                   <!-- Profile Edit Form -->
-                  <form action="{{route("admin.storeUser")}}" method="POST" enctype="multipart/form-data">
+                  <form action="{{route("admin.profile.uddate")}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">First Name <small class="text-danger">*</small></label>
                       <div class="col-md-8 col-lg-9">
                         <input name="first_name" type="text" class="form-control" id="fullName" value="{{$user['members']['first_name'] ?? ''}}" required>
+                        <input name="id" type="hidden" class="form-control" id="fullName" value="{{$user['id']}}">
+                        <input name="memberId" type="hidden" class="form-control" id="fullName" value="{{$user['members']['id']}}">
+                        <input name="type" type="hidden" class="form-control" id="fullName" value="updateMember">
                       </div>
                     </div>
 
@@ -75,7 +83,8 @@
                     <div class="row mb-3">
                         <label for="Address" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                         <div class="col-md-8 col-lg-9">
-                          <input name="profile_image" type="file" class="form-control" id="profile_image">
+                                <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><input type="file" name="profile_image" /><i class="bi bi-upload"></i></a>
+                                <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image" onclick="removeFile()"><i class="bi bi-trash"></i></a>
                         </div>
                       </div>
                 </div>
@@ -110,10 +119,10 @@
                         <select class="form-select" name="batch" aria-label="Default select example">
                             @for ($i=1; $i<=50; $i++ )
                                 @if (in_array($i, [24,25,26]))
-                                    <option value="{{"Batch ".$i. " (MBA)"}}">{{"Batch ".$i. " (MBA)"}}</option>
-                                    <option value="{{"Batch ".$i. " (M.Com)"}}">{{"Batch ".$i. "(M.Com)"}}</option>
+                                    <option value="{{"Batch ".$i. " (MBA)"}}" {{$user['members']['batch'] == "Batch ".$i. " (MBA)" ? "selected" : ""}}>{{"Batch ".$i. " (MBA)"}}</option>
+                                    <option value="{{"Batch ".$i. " (M.Com)"}}" {{$user['members']['batch'] == "Batch ".$i. " (M.Com)" ? "selected" : ""}}>{{"Batch ".$i. "(M.Com)"}}</option>
                                 @else
-                                    <option value="{{"Batch ".$i}}">{{"Batch ".$i}}</option>
+                                    <option value="{{"Batch ".$i}}" {{$user['members']['batch'] == "Batch ".$i ? "selected" : ""}}>{{"Batch ".$i}}</option>
                                 @endif
                             @endfor
                       </select>
@@ -200,43 +209,6 @@
         function removeFile(){
             $("input[type=file]").val("");
         }
-        function confettiAnimation() {
-            const duration = 5 * 1000,
-            animationEnd = Date.now() + duration,
-            defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-            function randomInRange(min, max) {
-            return Math.random() * (max - min) + min;
-            }
-
-            const interval = setInterval(function() {
-            const timeLeft = animationEnd - Date.now();
-
-            if (timeLeft <= 0) {
-                return clearInterval(interval);
-            }
-
-            const particleCount = 50 * (timeLeft / duration);
-
-            // since particles fall down, start a bit higher than random
-            confetti(
-                Object.assign({}, defaults, {
-                particleCount,
-                origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-                })
-            );
-            confetti(
-                Object.assign({}, defaults, {
-                particleCount,
-                origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-                })
-            );
-            }, 250);
-        }
-		@if(Session::has('success'))
-            confettiAnimation();
-		@endif
-
     </script>
 @endpush
 @endsection

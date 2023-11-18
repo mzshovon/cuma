@@ -140,6 +140,7 @@
                       </div>
                     </div>
                     <input name="id" type="hidden" class="form-control" id="fullName" value="{{auth()->user()->id ?? "N/A"}}">
+                    <input name="memberId" type="hidden" class="form-control" id="fullName" value="{{auth()->user()->members->id ?? "N/A"}}">
 
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Last Name</label>

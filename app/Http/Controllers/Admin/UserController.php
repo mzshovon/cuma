@@ -129,6 +129,7 @@ class UserController extends Controller
     public function profileUpdate(ProfileUpdateRequest $request, UserService $userService)
     {
         $userId= $request->id;
+        $updateType= $request->type ?? "profile";
         $memberData['first_name'] = $request->first_name;
         $memberData['last_name'] = $request->last_name;
         $userData['name'] = $request->first_name . " " . $request->last_name;
@@ -145,9 +146,13 @@ class UserController extends Controller
         $memberData['employeer_address'] = $request->employeer_address;
         $memberData['reference'] = $request->reference;
         $memberData['reference_number'] = $request->reference_number;
+        $memberData['membership_id'] = $request->membership_id ?? null;
         $memberData['image_path'] = $request->profile_image ?? null;
         [$message, $status] = $userService->updateUserInfoById($userId, $memberData, $userData);
         Session::put($message, $status);
+        if($updateType == "updateMember") {
+            return redirect()->back();
+        }
         return redirect("/admin/user-profile");
     }
 

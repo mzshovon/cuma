@@ -91,6 +91,9 @@ class UserService {
                 unset($memberData['image_path']);
             }
             if ($this->user::updateUserByParam("id", $userId, $userData)) {
+                if(!$memberData['membership_id']) {
+                    unset($memberData['membership_id']);
+                }
                 if ($this->membershipDetail::updateMemberByParam("user_id", $userId, $memberData)) {
                     return ["success", "Profile Info Updated Sucessfully!"];
                 }

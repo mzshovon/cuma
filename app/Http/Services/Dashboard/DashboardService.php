@@ -14,7 +14,7 @@ class DashboardService {
     public function getDashboardData()
     {
         $member = new User();
-        return $member->getUsersList(10);
+        return $member->getUsersList();
     }
 
     public function getMembersCount()

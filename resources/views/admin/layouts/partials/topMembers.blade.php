@@ -25,6 +25,7 @@
               <th scope="col">Contact</th>
               <th scope="col">Email</th>
               <th scope="col">Registered At</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -40,6 +41,17 @@
                     <td>{{$member['contact']}}</td>
                     <td>{{$member['email']}}</td>
                     <td>{{ \Carbon\Carbon::parse($member['created_at'])->format("d, M Y")}}</td>
+                    <td>
+                        @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
+                            <a href="{{route('admin.edituser',['userId' => $member['id']])}}" class="btn btn-outline-primary btn-sm">
+                                Update <i class="bi bi-pencil"></i>
+                            </a>
+                        @else
+                            <a href="{{route('admin.edituser',['userId' => $member['id']])}}" class="btn btn-primary btn-sm">
+                                View <i class="bi bi-eye"></i>
+                            </a>
+                        @endif
+                    </td>
                 </tr>
             @empty
 
