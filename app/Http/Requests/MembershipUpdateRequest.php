@@ -25,6 +25,7 @@ class MembershipUpdateRequest extends FormRequest
     {
         return [
             'user_id' => ['required'],
+            'user_email' => ['required'],
             'membership_id' => ['required', 'string', 'unique:membership_details,membership_id,'.$this->user_id],
         ];
     }

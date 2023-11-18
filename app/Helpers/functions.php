@@ -62,9 +62,11 @@ if (!function_exists('sendMailWithTemplate')) {
     function sendMailWithTemplate($data, $template, $to, $cc = null)
     {
         $subject = $data['subject'];
-        $message = $data["message"];
-        unset($data['message']);
-        $data['mailMessage'] = $message;
+        if(array_key_exists("message", $data)) {
+            $message = $data["message"];
+            unset($data['message']);
+            $data['mailMessage'] = $message;
+        }
         Mail::send($template, $data, function ($mail) use ($subject, $to, $cc) {
             $mail->to($to);
             if($cc){

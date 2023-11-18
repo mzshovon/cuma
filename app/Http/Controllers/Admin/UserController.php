@@ -87,34 +87,22 @@ class UserController extends Controller
         }
     }
 
-    public function updateUser(UpdateUserRequest $request, $userId){
-        try {
-            $name = $request->name ?? null;
-            $email = $request->email ?? null;
-            $status = $request->status ?? null;
-            [$statusName, $message] = $this->repo->updateUserInfoById($userId, $name, $email, $status);
-            return redirect()->route('admin.usersList')->with($statusName, $message);
+    // public function deleteUser($userId){
+    //     try {
+    //         $data = [];
+    //         [$data['statusName'], $data['message']] = $this->repo->deleteUserById($userId);
+    //         return $this->success($data);
 
-        } catch (\Throwable $th) {
-            return back()->with(500, $th->getMessage());
-        }
-    }
-
-    public function deleteUser($userId){
-        try {
-            $data = [];
-            [$data['statusName'], $data['message']] = $this->repo->deleteUserById($userId);
-            return $this->success($data);
-
-        } catch (\Exception $e) {
-            return $this->error("Something went wrong with error ".$e, null, $e->getCode());
-        }
-    }
+    //     } catch (\Exception $e) {
+    //         return $this->error("Something went wrong with error ".$e, null, $e->getCode());
+    //     }
+    // }
 
     public function assignMembershipId(MembershipUpdateRequest $request, UserService $userService) {
         $id = $request->user_id;
+        $email = $request->user_email;
         $membership_id = $request->membership_id;
-        [$message, $status] = $userService->assignMemberShipId($id, $membership_id);
+        [$message, $status] = $userService->assignMemberShipId($id, $membership_id, $email);
         Session::put($message, $status);
         return redirect()->route('admin.usersList');
 

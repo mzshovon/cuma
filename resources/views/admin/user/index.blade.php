@@ -71,7 +71,7 @@
                                             <td>
                                                 @if (!$user['members']['membership_id'])
                                                     <a href="javascript:void(0)" class="btn btn-outline-primary btn-sm"
-                                                    onclick="assignRoleModalShow(`{{ $user['members']['id'] }}`, null)">N/A. Update?</a>
+                                                    onclick="assignRoleModalShow(`{{ $user['members']['id'] }}`, null, `{{ $user['email'] }}`)">N/A. Update?</a>
                                                 @else
                                                     <button class="btn btn-success btn-sm"> {{$user['members']['membership_id']}} </button>
                                                 @endif
@@ -90,42 +90,6 @@
                                                     </a>
                                                 </td>
                                             @endif
-                                            {{-- <td>
-                                                @php
-                                                    $userRole = App\Models\User::userRole($user['id']);
-                                                @endphp
-
-                                                @if (isset($userRole->role))
-                                                    <span class="badge bg-primary">{{ $userRole->role }}</span>
-                                                    <a href="javascript:void(0)" class="badge bg-info bg-xs"
-                                                        onclick="assignRoleModalShow(`{{ $user['id'] }}`, `{{ $userRole->role_id }}`)">Re-assign Role</a>
-                                                @else
-                                                    <a href="javascript:void(0)" class="badge bg-info bg-xs"
-                                                        onclick="assignRoleModalShow(`{{ $user['id'] }}`, null)">Assign Role</a>
-                                                @endif
-                                            </td> --}}
-
-                                            {{-- <td>
-                                                @if (isset($user['status']))
-                                                    <span
-                                                        class="badge bg-{{ $user['status'] == 1 ? 'success' : 'warning' }}">
-                                                        <i
-                                                            class="bi {{ $user['status'] == 1 ? 'bi-check-circle me-1' : 'bi-exclamation-triangle me-1' }}"></i>
-                                                        {{ $user['status'] == 1 ? 'Active' : 'Inactive' }}
-                                                    </span>
-                                                @endif
-                                            </td> --}}
-                                            {{-- <td>
-                                                <div class="d-flex">
-                                                    <a href="javascript:void(0)"
-                                                        onclick="createEditModalShow(`{{ $user['name'] }}`, `{{ $user['email'] }}`, `{{ $user['status'] }}`, `{{ $user['id'] }}`)"
-                                                        class="btn btn-primary btn-sm"><i
-                                                            class="bi bi-pencil-square"></i></a>
-                                                    <a onclick="deleteUser(`{{ route('admin.deleteUser', ['userId' => $user['id']])}}`)"
-                                                        class="btn btn-danger btn-sm"><i
-                                                            class="bi bi-trash-fill"></i></a>
-                                                </div>
-                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -149,6 +113,7 @@
                                     method="POST" class="mx-3">
                                     @csrf
                                     <input type="hidden" name="user_id" id="id_user_id">
+                                    <input type="hidden" name="user_email" id="id_user_email">
                                     <input class="form-control" type="text" name="membership_id" id="membership_id" placeholder="Input membership id">
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -174,7 +139,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="{{ asset('/') }}admin/assets/js/call.js"></script>
     <script>
-        function assignRoleModalShow(userId, memberbershipId) {
+        function assignRoleModalShow(userId, memberbershipId, userEmail) {
             if(userId == "" || userId == null){
                 return false
             }
@@ -182,6 +147,11 @@
                 $("#membership_id").val(memberbershipId);
             } else {
                 $("#membership_id").val('');
+            }
+            if (userEmail) {
+                $("#id_user_email").val(userEmail);
+            } else {
+                $("#id_user_email").val('');
             }
             $("#id_user_id").val(userId);
             $("#role-assign-modal").modal('show')

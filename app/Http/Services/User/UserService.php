@@ -25,11 +25,12 @@ class UserService {
         return $this->user->getSingleUserByParam("id", $userId) ?? null;
     }
 
-    public function assignMemberShipId($id, $membership_id)
+    public function assignMemberShipId($id, $membership_id, $email)
     {
         try {
             $update = $this->membershipDetail->updateMemberByParam("id", $id, ['membership_id' => $membership_id]);
             if($update) {
+                $this->membershipIdProvidingMail($membership_id, $email);
                 return ["success", "Membership ID assigned successfully!"];
             }
         } catch (QueryException | Exception $e) {
@@ -72,6 +73,9 @@ class UserService {
                     unset($memberData['image_path']);
                 }
                 if($this->membershipDetail->createNewMember($memberData)) {
+                    if($memberData['membership_id']) {
+                        $this->membershipIdProvidingMail($memberData['membership_id'], $userData['email']);
+                    }
                     return ["success", "Member created successfully!"];
                 }
             }
@@ -95,6 +99,9 @@ class UserService {
                     unset($memberData['membership_id']);
                 }
                 if ($this->membershipDetail::updateMemberByParam("user_id", $userId, $memberData)) {
+                    if(array_key_exists('membership_id', $memberData) && $memberData['membership_id']) {
+                        $this->membershipIdProvidingMail($memberData['membership_id'], $userData['email']);
+                    }
                     return ["success", "Profile Info Updated Sucessfully!"];
                 }
             }
@@ -104,19 +111,26 @@ class UserService {
         }
     }
 
-    public function deleteUserById(int $userId)
-    {
-        try {
-            $deleteUserParam = 'id';
-            $userInfo = $this->user::getSingleUserByParam($deleteUserParam, $userId);
-            if($this->user::deleteUserByParam($deleteUserParam, $userId)) {
-                event(new ActivityLogEvent(ModuleEnum::UserDelete->value, "Delete user by $userId with param $deleteUserParam", "User named $userInfo->name deleted", "user-delete"));
-                return ["success", "User Deleted Sucessfully!"];
-            }
+    // public function deleteUserById(int $userId)
+    // {
+    //     try {
+    //         $deleteUserParam = 'id';
+    //         $userInfo = $this->user::getSingleUserByParam($deleteUserParam, $userId);
+    //         if($this->user::deleteUserByParam($deleteUserParam, $userId)) {
+    //             event(new ActivityLogEvent(ModuleEnum::UserDelete->value, "Delete user by $userId with param $deleteUserParam", "User named $userInfo->name deleted", "user-delete"));
+    //             return ["success", "User Deleted Sucessfully!"];
+    //         }
 
-        } catch (QueryException | Exception $e) {
-            return ["error", "Something Went Wrong. Error: ".$e->getMessage()];
-        }
+    //     } catch (QueryException | Exception $e) {
+    //         return ["error", "Something Went Wrong. Error: ".$e->getMessage()];
+    //     }
+    // }
+
+    private function membershipIdProvidingMail($membership_id, $email) : void
+    {
+        $data['subject'] = "New Membership ID $membership_id is provided";
+        $data['membership_id'] = $membership_id;
+        event(sendMailWithTemplate($data, "admin.template.mail.membership", $email));
     }
 
 }
