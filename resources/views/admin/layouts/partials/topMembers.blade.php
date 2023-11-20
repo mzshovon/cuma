@@ -22,14 +22,16 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Name</th>
-              <th scope="col">Contact</th>
+              @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
+                <th scope="col">Contact</th>
+              @endif
               <th scope="col">Email</th>
-              <th scope="col">Registered At</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
             @forelse ($members as $member)
+            @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin') || (auth()->user()->hasRole('user') && $member['members']['membership_id']))
                 <tr>
                     <th scope="row"><a href="#">{{$member['id']}}</a></th>
                     <td>
@@ -38,21 +40,23 @@
                         @endif
                         {{$member['name']}}
                     </td>
-                    <td>{{$member['contact']}}</td>
+                    @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
+                        <td>{{$member['contact']}}</td>
+                    @endif
                     <td>{{$member['email']}}</td>
-                    <td>{{ \Carbon\Carbon::parse($member['created_at'])->format("d, M Y")}}</td>
                     <td>
                         @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
                             <a href="{{route('admin.edituser',['userId' => $member['id']])}}" class="btn btn-outline-primary btn-sm">
-                                Update <i class="bi bi-pencil"></i>
+                                <i class="bi bi-pencil"></i>
                             </a>
                         @else
                             <a href="{{route('admin.edituser',['userId' => $member['id']])}}" class="btn btn-primary btn-sm">
-                                View <i class="bi bi-eye"></i>
+                                <i class="bi bi-eye"></i>
                             </a>
                         @endif
                     </td>
                 </tr>
+            @endif
             @empty
 
             @endforelse

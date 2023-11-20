@@ -109,7 +109,7 @@
                                                   <div class="tab-content" id="v-pills-tabContent">
                                                     <div class="tab-pane fade active show" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                                         Baksh No.: 01713-100850 (Personal)
-                                                        <br><b><i>* (For Bkash Payemnt - Member should pay with Membership Fee plus Bkash Charge.)</i></b>
+                                                        <br><b><i>* (For Bkash Payment - Member should pay with Membership Fee plus Bkash Charge.)</i></b>
                                                     </div>
                                                     <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                                         <b>A/C Name:</b> CTG. UNIVERSITY MANAGEMENT ASSOCIATION <br>
