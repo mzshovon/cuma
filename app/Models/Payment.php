@@ -61,4 +61,15 @@ class Payment extends Model
 
         return $data->get()->toArray();
     }
+
+    /**
+     * @param string $whereParam
+     * @param mixed $value
+     *
+     * @return
+     */
+    public static function getSinglePaymentByParam(string $whereParam, $value)
+    {
+        return self::where($whereParam, $value)->first();
+    }
 }

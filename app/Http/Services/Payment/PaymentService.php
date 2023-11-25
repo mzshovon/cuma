@@ -62,6 +62,9 @@ class PaymentService {
             } else {
                 unset($data['image_path']);
             }
+            if(in_array($payment->getSinglePaymentByParam('user_id', $userId)->status, ["approved", "declined"])) {
+                return [Response::HTTP_BAD_REQUEST, "Payment is already ".$payment->getSinglePaymentByParam('user_id', $userId)->status."! You can't update it"];
+            }
             if($payment->updatePaymentRequest($data ,"user_id", $userId)) {
                 return [Response::HTTP_OK, "Payment Request Placed Successfully. Admin will review and confirm your payment status soon."];
             }

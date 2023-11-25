@@ -25,6 +25,7 @@
               @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
                 <th scope="col">Contact</th>
               @endif
+              <th scope="col">Membership ID</th>
               <th scope="col">Email</th>
               <th scope="col">Action</th>
             </tr>
@@ -43,6 +44,7 @@
                     @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
                         <td>{{$member['contact']}}</td>
                     @endif
+                    <td>{{$member['members']['membership_id']}}</td>
                     <td>{{$member['email']}}</td>
                     <td>
                         @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
