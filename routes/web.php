@@ -77,7 +77,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
         Route::post('/', [UtilityController::class, 'storeAndSendContactMessage'])->name('contact.submit');
     });
 
-    Route::group(['prefix' => '[payment]'], function() {
+    Route::group(['prefix' => 'payment'], function() {
         Route::get('/', [PaymentController::class, 'view'])->name('payment');
         Route::post('/', [PaymentController::class, 'store'])->name('payment.store');
         Route::post('/update/{id}', [PaymentController::class, 'update'])->name('payment.update');

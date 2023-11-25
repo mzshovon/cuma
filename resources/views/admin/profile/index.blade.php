@@ -14,7 +14,7 @@
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
               <img src="{{URL::to("/") ."/". auth()->user()->members->image_path}}" alt="Profile" class="rounded-circle">
               <h2>{{auth()->user()->name}}</h2>
-              <h3>{{auth()->user()->email}}</h3>
+              <h3>Membership ID: {{auth()->user()->members->membership_id ?? "Not provided yet"}}</h3>
               <div class="social-links mt-2">
                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                 <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>

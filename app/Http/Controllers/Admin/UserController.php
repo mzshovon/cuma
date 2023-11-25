@@ -74,7 +74,7 @@ class UserController extends Controller
 
     public function editUser($userId, UserService $userService){
         try {
-            $data['title'] = "Update Member";
+            $data['title'] = auth()->user()->hasRole('user') ? "Member Details" : "Update Member Details";
             $data['user'] = $userService->getUserInfoById($userId);
             if(!$data['user']) {
                 Session::put("error", "No user found for this id!");

@@ -31,7 +31,7 @@
           </thead>
           <tbody>
             @forelse ($members as $member)
-            @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin') || (auth()->user()->hasRole('user') && $member['members']['membership_id']))
+            @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin') || (auth()->user()->hasRole('user') && $member['members']['membership_id'] && auth()->user()->id !== $member['id']))
                 <tr>
                     <th scope="row"><a href="#">{{$member['id']}}</a></th>
                     <td>

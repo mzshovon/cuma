@@ -98,8 +98,9 @@ class UserService {
                 if(!$memberData['membership_id']) {
                     unset($memberData['membership_id']);
                 }
+                $oldMembershipId = $this->membershipDetail::getSingleMemberByParam("user_id", $userId)->membership_id;
                 if ($this->membershipDetail::updateMemberByParam("user_id", $userId, $memberData)) {
-                    if(array_key_exists('membership_id', $memberData) && $memberData['membership_id']) {
+                    if(array_key_exists('membership_id', $memberData) && $memberData['membership_id'] != $oldMembershipId) {
                         $this->membershipIdProvidingMail($memberData['membership_id'], $userData['email']);
                     }
                     return ["success", "Profile Info Updated Sucessfully!"];

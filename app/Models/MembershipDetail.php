@@ -67,6 +67,17 @@ class MembershipDetail extends Model
         return $data->get()->toArray();
     }
 
+    /**
+     * @param string $whereParam
+     * @param mixed $value
+     *
+     * @return
+     */
+    public static function getSingleMemberByParam(string $whereParam, $value)
+    {
+        return self::where($whereParam, $value)->first();
+    }
+
      /**
      * @param string $whereParam
      * @param int|string $value
