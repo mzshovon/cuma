@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PaymentStoreRequest;
 use App\Http\Services\Payment\PaymentService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,12 +20,15 @@ class PaymentController extends Controller
     }
     public function filter(Request $request, PaymentService $paymentService)
     {
-        $from = $request->get('from') ?? null;
-        $to = $request->get('to') ?? null;
+        $from = $request->get('from') ? Carbon::parse($request->get('from'))->format('Y-m-d') : null;
+        $to = $request->get('to') ? Carbon::parse($request->get('to'))->format('Y-m-d') : null;
+        if(($from && !$to) || (!$from && $to)) {
+            Session::put("error", "From and To date must be kept both filled or both empty");
+            return redirect()->back();
+        }
         $status = $request->get('status') ?? null;
         // $columns = $request->get('columns') ?? null;
-        $payments = $paymentService->filterPaymentData($from, $to, $status);
-        return view("admin.payment.index", $payments);
+        return $paymentService->filterPaymentData($from, $to, $status);
     }
 
     public function store(PaymentStoreRequest $request,PaymentService $paymentService)

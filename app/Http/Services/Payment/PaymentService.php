@@ -2,14 +2,18 @@
 
 namespace App\Http\Services\Payment;
 
+use App\Exports\ExportExcel;
+use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
 
 class PaymentService {
 
     private $valueListForTop = ["first_name", "nid"];
+    private $columnsValue = ["Name", "Email", "Contact Number", "Payment Channel", "Transaction ID", "Amount", "Status", "Submitted At"];
 
     public function __construct(private Payment $payment)
     {
@@ -23,10 +27,14 @@ class PaymentService {
         return $payment->getPayments($userId) ?? [];
     }
 
-    public function filterPaymentData($from, $to, $columns)
+    public function filterPaymentData($from, $to, $status)
     {
         $payment = $this->payment;
-        return $payment->getPayments($userId) ?? [];
+        $filteredData = $payment->getPayments(null, null, $from, $to, $status);
+        $resourceData = PaymentResource::collection($filteredData)->toArray($filteredData);
+        $format = "xlsx";
+        $file = "Payment Data.$format";
+        return Excel::download(new ExportExcel($resourceData, $this->columnsValue), $file);
     }
 
     /**

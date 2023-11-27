@@ -78,3 +78,22 @@ if (!function_exists('sendMailWithTemplate')) {
     }
 }
 
+if (!function_exists('setStartEndDayForFiltering')) {
+    /**
+     * Use if your filtering logic is:
+     * If user doesn't select from and to, then it returns null
+     *
+     * @param $from
+     * @param $to
+     * @return string[]
+     */
+    function setStartEndDayForFiltering($from, $to)
+    {
+        if ($from && $to) {
+            $from = date($from) . " 00:00:00";
+            $to = date($to) . " 23:59:59";
+        }
+        return [$from, $to];
+    }
+}
+

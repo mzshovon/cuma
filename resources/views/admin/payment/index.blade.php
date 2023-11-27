@@ -48,8 +48,8 @@
                                             </div>
                                           </div> --}}
                                         <div class="col-md-3">
-                                            <select class="form-select" aria-label="Default select example">
-                                                <option selected="">Choose Status</option>
+                                            <select class="form-select" name="status" aria-label="Default select example">
+                                                <option selected value="">Choose Status</option>
                                                 <option value="pending">Pending</option>
                                                 <option value="approved">Approved</option>
                                                 <option value="declined">Declined</option>

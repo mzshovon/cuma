@@ -51,16 +51,18 @@ class Payment extends Model
     public function getPayments($userId = null, array|null $values = null, $from = null, $to = null, $status = null, $order = "DESC")
     {
         $data = $this->with("user")->orderBy("updated_at", $order);
+        $data_range = setStartEndDayForFiltering($from, $to);
         $data->when($userId, function($q) use ($userId){
             $q->whereUserId($userId);
         })->when($status, function($q) use ($status){
+            dd($status);
             $q->whereStatus($status);
         })->when($from, function($q) use ($from, $to){
-            $q->whereBetween("updated_at", [$from, $to]);
+            $q->whereBetween("created_at", [$from." 00:00:00", $to." 23:59:00"]);
         })->when($values, function($q) use ($values){
             $q->get($values);
         });
-
+        // dd($data->get());
         return $data->get()->toArray();
     }
 
