@@ -93,6 +93,9 @@
               <div class="card">
                 <img src="https://cdn.dribbble.com/users/1223630/screenshots/8115260/media/8145a871d9c4d67ec06e047ccc6574b4.gif" class="card-img-top" alt="...">
                 <div class="card-body">
+                    <div class="alert alert-warning">For any query please reach us at <a href="tel:8801671863685">+880 1671-863685</a>
+                    <p>Mail At: <a href="mail:info@cumabd.com">info@cumabd.com</a> or click <a href="{{route('admin.contact')}}">Contact Us</a> for support</p>
+                    </div>
                     <a href="{{route('admin.profile')}}" class="btn btn-outline-primary"> Visit profile </a>
                     <a href="{{route('admin.payment')}}" class="btn btn-outline-primary"> Payment </a>
                     <a href="{{route('admin.contact')}}" class="btn btn-outline-primary"> Place your ticket </a>

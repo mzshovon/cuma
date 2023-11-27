@@ -79,6 +79,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
 
     Route::group(['prefix' => 'payment'], function() {
         Route::get('/', [PaymentController::class, 'view'])->name('payment');
+        Route::get('/filter', [PaymentController::class, 'filter'])->name('payment.filter');
         Route::post('/', [PaymentController::class, 'store'])->name('payment.store');
         Route::post('/update/{id}', [PaymentController::class, 'update'])->name('payment.update');
         Route::get('/updateStatus/{id}/{status}', [PaymentController::class, 'updateStatus'])->name('payment.update.status');

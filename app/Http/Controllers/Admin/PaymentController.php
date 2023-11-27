@@ -17,6 +17,15 @@ class PaymentController extends Controller
         $data['payments'] = $paymentService->getPaymentData();
         return view("admin.payment.index", $data);
     }
+    public function filter(Request $request, PaymentService $paymentService)
+    {
+        $from = $request->get('from') ?? null;
+        $to = $request->get('to') ?? null;
+        $status = $request->get('status') ?? null;
+        // $columns = $request->get('columns') ?? null;
+        $payments = $paymentService->filterPaymentData($from, $to, $status);
+        return view("admin.payment.index", $payments);
+    }
 
     public function store(PaymentStoreRequest $request,PaymentService $paymentService)
     {

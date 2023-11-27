@@ -48,11 +48,13 @@ class Payment extends Model
      *
      * @return [type]
      */
-    public function getPayments($userId = null, array|null $values = null, $from = null, $to = null, $order = "DESC")
+    public function getPayments($userId = null, array|null $values = null, $from = null, $to = null, $status = null, $order = "DESC")
     {
         $data = $this->with("user")->orderBy("updated_at", $order);
         $data->when($userId, function($q) use ($userId){
             $q->whereUserId($userId);
+        })->when($status, function($q) use ($status){
+            $q->whereStatus($status);
         })->when($from, function($q) use ($from, $to){
             $q->whereBetween("updated_at", [$from, $to]);
         })->when($values, function($q) use ($values){

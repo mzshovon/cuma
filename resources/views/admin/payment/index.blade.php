@@ -1,4 +1,7 @@
 @extends('admin.layouts.master')
+@push('style')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
 @section('body')
     <main id="main" class="main">
 
@@ -24,7 +27,46 @@
                                         <a href="javascript:void(0)" class="btn btn-success btn-sm"
                                         onclick="createEditModalShow(null,null,null,null)">Add new</a>
                                     </h5>
-                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">Filter</div>
+                                <div class="card-body pt-4 pb-4">
+                                    <form class="row" method="GET" action="{{route('admin.payment.filter')}}">
+                                        @csrf
+                                        {{-- <div class="col-md-3">
+                                            <div class="input-group">
+                                              <select class="form-select multiple-columns" name="columns[]" multiple="multiple">
+                                                  <option value="Name">Name</option>
+                                                  <option value="Email">Email</option>
+                                                  <option value="Contact Number">Contact Number</option>
+                                                  <option value="Payment Channel">Payment Channel</option>
+                                                  <option value="Transaction ID">Transaction ID</option>
+                                                  <option value="Amount">Amount</option>
+                                                  <option value="Status">Status</option>
+                                                  <option value="Submitted At">Submitted At</option>
+                                                </select>
+                                            </div>
+                                          </div> --}}
+                                        <div class="col-md-3">
+                                            <select class="form-select" aria-label="Default select example">
+                                                <option selected="">Choose Status</option>
+                                                <option value="pending">Pending</option>
+                                                <option value="approved">Approved</option>
+                                                <option value="declined">Declined</option>
+                                              </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                          <input type="text" class="form-control" id="validationDefault01" placeholder="From" name="from" onfocus="(this.type='date')" onblur="(this.type='text')" >
+                                        </div>
+                                        <div class="col-md-3">
+                                          <input type="text" class="form-control" id="validationDefault01" placeholder="To" name="to" onfocus="(this.type='date')" onblur="(this.type='text')" >
+                                        </div>
+                                        <div class="col-md-3">
+                                          <button class="btn btn-primary" type="submit"><i class="bi bi-download"></i> Download</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                    </div>
                             </div>
                             <!-- Table with stripped rows -->
                             <table class="table datatable">
@@ -160,8 +202,14 @@
     </main><!-- End #main -->
 @endsection
 @push('script')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
     <script>
+        $(document).ready(function() {
+            $('.multiple-columns').select2({
+                placeholder: 'Select columns'
+            });
+        });
         function createEditModalShow(payment_channel, amount, transId, userId) {
             console.log(payment_channel);
             if (payment_channel) {

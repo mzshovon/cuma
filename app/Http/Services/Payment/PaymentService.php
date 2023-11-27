@@ -23,6 +23,12 @@ class PaymentService {
         return $payment->getPayments($userId) ?? [];
     }
 
+    public function filterPaymentData($from, $to, $columns)
+    {
+        $payment = $this->payment;
+        return $payment->getPayments($userId) ?? [];
+    }
+
     /**
      * @param mixed $data
      *
