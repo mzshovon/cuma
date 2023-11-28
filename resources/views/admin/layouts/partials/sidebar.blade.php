@@ -26,7 +26,7 @@
             </a>
         </li><!-- End Dashboard Nav -->
 
-        @if (auth()->user()->hasRole("superadmin"))
+        @if (auth()->user()->hasRole("superadmin") || auth()->user()->hasRole("admin"))
             <li class="nav-item">
                 <a class="nav-link {{ in_array($route, ['admin.usersList']) ? 'nav-item-active-a' : 'collapsed' }}"
                     href="{{ route('admin.usersList') }}">

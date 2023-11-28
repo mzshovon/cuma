@@ -32,7 +32,7 @@
             </div>
         @endif
 
-        @if (auth()->user()->hasRole('superadmin'))
+        @if (auth()->user()->hasRole('superadmin') || auth()->user()->hasRole('admin'))
         <div class="col-lg-8 col-12">
           <div class="row">
             <!-- Recent Sales -->
