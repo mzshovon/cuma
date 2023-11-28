@@ -23,7 +23,7 @@ class PaymentService {
     public function getPaymentData()
     {
         $payment = $this->payment;
-        $userId = (getUserInfo()->hasRole("superadmin") || getUserInfo()->hasRole("superadmin")) ? null : getUserInfo()->id;
+        $userId = (getUserInfo()->hasRole("superadmin") || getUserInfo()->hasRole("admin")) ? null : getUserInfo()->id;
         return $payment->getPayments($userId) ?? [];
     }
 
