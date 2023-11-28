@@ -57,6 +57,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth']], 
     // User routes
     Route::group(['prefix' => 'member'], function() {
         Route::get('/', [UserController::class, 'getUsers'])->name('usersList');
+        Route::get('/filter', [UserController::class, 'filter'])->name('usersFilter');
         Route::get('/create', [UserController::class, 'createUser'])->name('createUser');
         Route::post('/store', [UserController::class, 'storeUser'])->name('storeUser');
         Route::get('/edit/{userId}', [UserController::class, 'edituser'])->name('edituser');

@@ -28,6 +28,7 @@
                                         onclick="createEditModalShow(null,null,null,null)">Add new</a>
                                     </h5>
                             </div>
+                            @if (auth()->user()->hasRole('superadmin'))
                             <div class="card">
                                 <div class="card-header">Filter</div>
                                 <div class="card-body pt-4 pb-4">
@@ -68,6 +69,7 @@
                                     </div>
                                     </div>
                             </div>
+                            @endif
                             <!-- Table with stripped rows -->
                             <table class="table datatable">
                                 <thead>

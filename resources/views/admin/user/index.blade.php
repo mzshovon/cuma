@@ -38,6 +38,75 @@
                                     </h5>
                                 </div> --}}
                             </div>
+                            @if (auth()->user()->hasRole('superadmin'))
+                            <div class="card">
+                                <div class="card-header">Filter</div>
+                                <div class="card-body pt-4 pb-4">
+                                    <form class="row" method="GET" action="{{route('admin.usersFilter')}}">
+                                        @csrf
+                                        {{-- <div class="col-md-3">
+                                            <div class="input-group">
+                                              <select class="form-select multiple-columns" name="columns[]" multiple="multiple">
+                                                  <option value="Name">Name</option>
+                                                  <option value="Email">Email</option>
+                                                  <option value="Contact Number">Contact Number</option>
+                                                  <option value="Payment Channel">Payment Channel</option>
+                                                  <option value="Transaction ID">Transaction ID</option>
+                                                  <option value="Amount">Amount</option>
+                                                  <option value="Status">Status</option>
+                                                  <option value="Submitted At">Submitted At</option>
+                                                </select>
+                                            </div>
+                                          </div> --}}
+                                        <div class="col-md-2">
+                                            <select class="form-select" name="payment" aria-label="Default select example">
+                                                <option selected value="">Select Payment Type</option>
+                                                <option value="General Member">General Member</option>
+                                                <option value="Life Member">Life Member</option>
+                                                <option value="Donor Member">Donor Member</option>
+                                                <option value="Honorary Member">Honorary Member</option>
+                                              </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select class="form-select" name="blood_group" aria-label="Default select example">
+                                                <option selected value="">Select Blood Group</option>
+                                                <option value="A+">A+</option>
+                                                <option value="A-">A-</option>
+                                                <option value="B+">B+</option>
+                                                <option value="B-">B-</option>
+                                                <option value="O+">O+</option>
+                                                <option value="O-">O-</option>
+                                                <option value="AB+">AB+</option>
+                                                <option value="AB-">AB-</option>
+                                              </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select class="form-select" name="batch" aria-label="Default select example">
+                                                <option selected value="">Select Batch</option>
+                                                @for ($i=1; $i<=50; $i++ )
+                                                @if (in_array($i, [24,25,26]))
+                                                    <option value="{{"Batch ".$i. " (MBA)"}}">{{"Batch ".$i. " (MBA)"}}</option>
+                                                    <option value="{{"Batch ".$i. " (M.Com)"}}">{{"Batch ".$i. "(M.Com)"}}</option>
+                                                @else
+                                                    <option value="{{"Batch ".$i}}">{{"Batch ".$i}}</option>
+                                                @endif
+                                            @endfor
+                                              </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                          <input type="text" class="form-control" id="validationDefault01" placeholder="From" name="from" onfocus="(this.type='date')" onblur="(this.type='text')" >
+                                        </div>
+                                        <div class="col-md-2">
+                                          <input type="text" class="form-control" id="validationDefault01" placeholder="To" name="to" onfocus="(this.type='date')" onblur="(this.type='text')" >
+                                        </div>
+                                        <div class="col-md-2">
+                                          <button class="btn btn-primary" type="submit"><i class="bi bi-download"></i> Download</button>
+                                        </div>
+                                      </form>
+                                    </div>
+                                    </div>
+                            </div>
+                            @endif
                             <!-- Table with stripped rows -->
                             <table class="table datatable">
                                 <thead>
@@ -82,7 +151,7 @@
                                             <td>{{ $user['members']['batch'] }}</td>
                                             <td>{{ $user['members']['blood_group'] }}</td>
                                             <td>{{ isset($user['roles'][0]) ? $user['roles'][0]['name'] : "user" }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($user['updated_at'])->format("d, M Y") }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($user['created_at'])->format("d, M Y") }}</td>
                                             @if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
                                                 <td>
                                                     <a href="{{route('admin.edituser',['userId' => $user['id']])}}" class="btn btn-outline-info btn-sm">

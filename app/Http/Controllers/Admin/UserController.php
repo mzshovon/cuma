@@ -11,6 +11,7 @@ use App\Http\Services\User\UserService;
 use App\Models\Role;
 use App\Models\User;
 use App\Rules\MatchOldPassword;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,6 +31,20 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             return $th;
         }
+    }
+
+    public function filter(Request $request, UserService $userService)
+    {
+        $from = $request->get('from') ? Carbon::parse($request->get('from'))->format('Y-m-d') : null;
+        $to = $request->get('to') ? Carbon::parse($request->get('to'))->format('Y-m-d') : null;
+        if(($from && !$to) || (!$from && $to)) {
+            Session::put("error", "From and To date must be kept both filled or both empty");
+            return redirect()->back();
+        }
+        $payment = $request->get('payment') ?? null;
+        $batch = $request->get('batch') ?? null;
+        $blood_group = $request->get('blood_group') ?? null;
+        return $userService->filterUsersData($from, $to, $payment, $blood_group, $batch);
     }
 
     public function createUser(){

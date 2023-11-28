@@ -50,18 +50,29 @@ class User extends Authenticatable
         return $this->hasOne(MembershipDetail::class);
     }
 
-    public function getUsersList($limit = null, array|null $values = null, $from = null, $to = null, $order = "DESC")
+    public function getUsersList($limit = null, array|null $values = null, $from = null, $to = null, $payment = null, $blood_group = null, $batch = null, $order = "DESC")
     {
         $data = $this->with("members","roles")->orderBy("updated_at", $order);
-
+        $data_range = setStartEndDayForFiltering($from, $to);
         $data->when($values, function($q) use ($values){
             $q->get($values);
-        })->when($from, function($q) use ($from, $to){
-            $q->whereBetween("updated_at", [$from, $to]);
+        })->when($from, function($q) use ($data_range){
+            $q->whereBetween("created_at", $data_range);
+        })->when($batch, function($q) use ($batch){
+            $q->whereHas('members', function($sq) use ($batch) {
+                $sq->whereBatch($batch);
+            });
+        })->when($blood_group, function($q) use ($blood_group){
+            $q->whereHas('members', function($sq) use ($blood_group) {
+                $sq->whereBloodGroup($blood_group);
+            });
+        })->when($payment, function($q) use ($payment){
+            $q->whereHas('members', function($sq) use ($payment) {
+                $sq->wherePayment($payment);
+            });
         })->when($limit, function($q) use ($limit){
             $q->take($limit);
         });
-
         return $data->get()->toArray();
     }
 

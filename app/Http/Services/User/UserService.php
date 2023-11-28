@@ -3,15 +3,20 @@
 namespace App\Http\Services\User;
 
 use App\Events\ActivityLogEvent;
+use App\Exports\ExportExcel;
 use App\Http\Enums\ModuleEnum;
+use App\Http\Resources\UserResource;
 use App\Models\MembershipDetail;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserService {
+
+    private $columnsValue = ["Name", "Membership ID", "Email", "Contact", "Payment", "Batch", "Blood Group", "Registered At"];
 
     public function __construct(private User $user, private MembershipDetail $membershipDetail){}
 
@@ -23,6 +28,16 @@ class UserService {
     public function getUserInfoById($userId)
     {
         return $this->user->getSingleUserByParam("id", $userId) ?? null;
+    }
+
+    public function filterUsersData($from, $to, $payment, $blood_group, $batch)
+    {
+        $user = $this->user;
+        $filteredData = $user->getUsersList(null, null, $from, $to, $payment, $blood_group, $batch);
+        $resourceData = UserResource::collection($filteredData)->toArray($filteredData);
+        $format = "xlsx";
+        $file = "Users Data.$format";
+        return Excel::download(new ExportExcel($resourceData, $this->columnsValue), $file);
     }
 
     public function assignMemberShipId($id, $membership_id, $email)
