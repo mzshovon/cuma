@@ -101,6 +101,7 @@
                             <div class="form-input">
                                 <label for="chequeno">Password</label>
                                 <input type="password" name="password" id="password" />
+                                <label id="show-hide-password" class="eye" for="password"></label>
                             </div>
                         </div>
 
@@ -119,6 +120,22 @@
     </div>
 
 </div>
-
+@push('script')
+    <script>
+        var password = document.getElementById('password');
+        var toggler = document.getElementById('show-hide-password');
+        showHidePassword = () => {
+            if (password.type == 'password') {
+                console.log("hello");
+                password.setAttribute('type', 'text');
+                toggler.classList.add('eye-off');
+            } else {
+                toggler.classList.remove('eye-off');
+                password.setAttribute('type', 'password');
+            }
+        };
+        toggler.addEventListener('click', showHidePassword);
+    </script>
+@endpush
 
 @endsection

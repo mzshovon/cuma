@@ -261,25 +261,22 @@
                   <form action="{{route("admin.profile.reset-password")}}" method="POST">
                     @csrf
                     <input name="" type="hidden" class="form-control" id="fullName" value="{{auth()->user()->id ?? "N/A"}}">
-                    <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                      <div class="col-md-8 col-lg-9">
+                    <div class="input-group mb-3">
+                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                         <input name="current_password" type="password" class="form-control" id="currentPassword">
-                      </div>
+                        <span class="input-group-text"><i class="bi bi-eye"></i></span>
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                      <div class="col-md-8 col-lg-9">
+                    <div class="input-group mb-3">
+                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                         <input name="new_password" type="password" class="form-control" id="newPassword">
-                      </div>
+                        <span class="input-group-text"><i class="bi bi-eye"></i></span>
                     </div>
 
-                    <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                      <div class="col-md-8 col-lg-9">
+                    <div class="input-group mb-3">
+                        <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Re-Enter Password</label>
                         <input name="new_confirm_password" type="password" class="form-control" id="renewPassword">
-                      </div>
+                        <span class="input-group-text"><i class="bi bi-eye"></i></span>
                     </div>
 
                     <div class="text-center">
@@ -304,6 +301,19 @@
         function removeFile(){
             $("input[type=file]").val("");
         }
+        $(document).on("click", ".bi-eye", function() {
+            let element = $(this);
+            element.removeClass('bi-eye');
+            element.addClass('bi-eye-slash');
+            element.parent('span').parent('div').find('input').prop('type', 'text');
+        });
+        $(document).on("click", ".bi-eye-slash", function() {
+            let element = $(this);
+            element.removeClass('bi-eye-slash');
+            element.addClass('bi-eye');
+            element.parent('span').parent('div').find('input').prop('type', 'password');
+        });
+
     </script>
 @endpush
 @endsection

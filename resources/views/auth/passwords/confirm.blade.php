@@ -73,10 +73,12 @@
                             <div class="form-input">
                                 <label for="password" class="required">Password</label>
                                 <input type="password" name="password" id="password" />
+                                <label id="show-hide-password" class="eye" for="password"></label>
                             </div>
                             <div class="form-input">
                                 <label for="password_confirmation" class="required">Confirm Password</label>
-                                <input type="password" name="password_confirmation" id="password" />
+                                <input type="password" name="password_confirmation" id="confirm_password" />
+                                <label id="show-hide-password-confirm" class="eye" for="password"></label>
                             </div>
                         </div>
 
@@ -90,4 +92,36 @@
     </div>
 
 </div>
+@push('script')
+
+<script>
+    var password = document.getElementById('password');
+    var confirm_password = document.getElementById('confirm_password');
+    var toggler = document.getElementById('show-hide-password');
+    var confirmToggler = document.getElementById('show-hide-password-confirm');
+    showHidePassword = () => {
+        if (password.type == 'password') {
+            console.log("hello");
+            password.setAttribute('type', 'text');
+            toggler.classList.add('eye-off');
+        } else {
+            toggler.classList.remove('eye-off');
+            password.setAttribute('type', 'password');
+        }
+    };
+    showHideConfirmPassword = () => {
+        if (confirm_password.type == 'password') {
+            console.log("hello");
+            confirm_password.setAttribute('type', 'text');
+            confirmToggler.classList.add('eye-off');
+        } else {
+            confirmToggler.classList.remove('eye-off');
+            confirm_password.setAttribute('type', 'password');
+        }
+    };
+    toggler.addEventListener('click', showHidePassword);
+    confirmToggler.addEventListener('click', showHideConfirmPassword);
+</script>
+
+@endpush
 @endsection
