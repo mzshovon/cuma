@@ -72,9 +72,9 @@
     <div class="container">
         <div class="signup-content">
             <div class="signup-img">
-                <img src="{{asset('/frontend/images/CUMA-Logo.png')}}" alt="">
+                <img src="{{URL::to('/')}}/public/frontend/images/CUMA-Logo.png" alt="">
             </div>
-            <div class="signup-form" style="padding:80px!important">
+            <div class="signup-form signin-padding">
                 <form method="POST" class="register-form" id="register-form" action="{{ route('password.update') }}">
                     @if($errors->any())
                     @foreach ($errors->all() as $error)
@@ -87,6 +87,9 @@
                     <div class="form-row">
                         <input type="hidden" name="token" value="{{ $token }}">
                         <div class="form-group">
+                            <div class="form-input signup-responsive-logo">
+                                <img src="{{URL::to('/')}}/public/frontend/images/CUMA-Logo.png" alt="">
+                            </div>
                             <div class="form-input">
                                 <label for="email" class="required">Email</label>
                                 <input type="email" name="email" id="email" />

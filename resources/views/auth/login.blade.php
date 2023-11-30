@@ -76,13 +76,12 @@
 @section('content')
 
 <div class="main">
-
     <div class="container">
         <div class="signup-content">
             <div class="signup-img">
                 <img src="{{asset('/frontend/images/CUMA-Logo.png')}}" alt="">
             </div>
-            <div class="signup-form" style="padding:80px!important">
+            <div class="signup-form signin-padding">
                 <form method="POST" class="register-form" id="register-form" action="{{route('login')}}">
                     @if($errors->any())
                     @foreach ($errors->all() as $error)
@@ -94,6 +93,9 @@
                     @csrf
                     <div class="form-row">
                         <div class="form-group">
+                            <div class="form-input signup-responsive-logo">
+                                <img src="{{asset('/frontend/images/CUMA-Logo.png')}}" alt="">
+                            </div>
                             <div class="form-input">
                                 <label for="email" class="required">Email or Phone Number</label>
                                 <input type="text" name="username" id="email" />
@@ -104,10 +106,9 @@
                                 <label id="show-hide-password" class="eye" for="password"></label>
                             </div>
                         </div>
-
                     </div>
                     {{-- <div class="form-submit"> --}}
-                        <input type="submit" value="Submit" class="submit" id="submit" name="submit" />
+                    <input type="submit" value="Submit" class="submit" id="submit" name="submit" />
                         {{-- <input type="button" value="Reset" class="submit" id="reset" name="reset" /> --}}
                     {{-- </div> --}}
                     Forget password? <a href="{{route('password.request')}}">Reset Password</a>
@@ -118,7 +119,6 @@
             </div>
         </div>
     </div>
-
 </div>
 @push('script')
     <script>

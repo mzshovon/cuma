@@ -106,6 +106,9 @@
                     @csrf
                     <div class="form-row">
                         <div class="form-group">
+                            <div class="form-input signup-responsive-logo">
+                                <img src="{{asset('/frontend/images/CUMA-Logo.png')}}" alt="">
+                            </div>
                             <div class="form-input">
                                 <label for="first_name" class="required">First name</label>
                                 <input type="text" name="first_name" id="first_name" />

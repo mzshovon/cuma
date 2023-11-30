@@ -55,9 +55,9 @@
     <div class="container">
         <div class="signup-content">
             <div class="signup-img">
-                <img src="{{asset('/frontend/images/CUMA-Logo.png')}}" alt="">
+                <img src="{{URL::to('/')}}/public/frontend/images/CUMA-Logo.png" alt="">
             </div>
-            <div class="signup-form" style="padding:80px!important">
+            <div class="signup-form signin-padding">
                 <form method="POST" class="register-form" id="register-form" action="{{ route('password.email') }}">
                     @if (session('status'))
                         <div class="success-alert" role="alert">
@@ -74,6 +74,9 @@
                     @csrf
                     <div class="form-row">
                         <div class="form-group">
+                            <div class="form-input signup-responsive-logo">
+                                <img src="{{URL::to('/')}}/public/frontend/images/CUMA-Logo.png" alt="">
+                            </div>
                             <div class="form-input">
                                 <label for="email" class="required">Email</label>
                                 <input type="text" name="email" id="email" />
