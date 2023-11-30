@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::get('/', [LoginController::class, 'showLoginForm'])->name('portal.login');
+Route::get('/', [LandingPageController::class, 'viewLandingPage'])->name('homepage');
 Route::get('/register', [LandingPageController::class, 'viewLandingPage'])->name('registration');
 
 Auth::routes();

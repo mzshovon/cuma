@@ -14,6 +14,6 @@ class LandingPageController extends Controller
 
     public function viewLandingPage()
     {
-        return view("frontend.registration");
+        return view("frontend.home");
     }
 }
