@@ -8,8 +8,8 @@
     <meta content="" name="keywords">
 
     <!-- Favicons -->
-    <link href="{{URL::to('/')}}/public/frontend/images/CUMA-Logo.png" rel="icon">
-    <link href="{{URL::to('/')}}/public/frontend/images/CUMA-Logo.png" rel="apple-touch-icon">
+    <link href="{{URL::to('/')}}/public/landing/img/favicon.png" rel="icon">
+    <link href="{{URL::to('/')}}/public/landing/img/favicon.png" rel="apple-touch-icon">
 
     <!-- Font Icon -->
     <link href="{{URL::to('/')}}/public/frontend/fonts/material-icon/css/material-design-iconic-font.min.css" rel="stylesheet">

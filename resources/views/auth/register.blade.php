@@ -91,7 +91,7 @@
     <div class="container">
         <div class="signup-content">
             <div class="signup-img">
-                <img src="{{asset('/frontend/images/CUMA-Logo.png')}}" alt="">
+                <img src="{{URL::to('/')}}/public/landing/img/logo.png" alt="">
             </div>
             <div class="signup-form">
 
@@ -107,7 +107,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <div class="form-input signup-responsive-logo">
-                                <img src="{{asset('/frontend/images/CUMA-Logo.png')}}" alt="">
+                                <img src="{{URL::to('/')}}/public/landing/img/logo.png" alt="">
                             </div>
                             <div class="form-input">
                                 <label for="first_name" class="required">First name</label>
@@ -265,28 +265,28 @@
 @push('script')
 
 <script>
-    var modal = document.getElementById("myModal");
-    var modalImg = document.getElementById("img01");
-    modal.style.display = "block";
-    if(screen.width < 700) {
-        modalImg.src = "{{URL::to('/').'/public/frontend/images/Payment Details Mobile. Ver..png'}}";
-        modalImg.style.width = "350px";
-        modalImg.style.height = "550px";
-    } else {
-        modalImg.src = "{{URL::to('/').'/public/frontend/images/Payment Details Dek. Ver..png'}}";
-    }
+    // var modal = document.getElementById("myModal");
+    // var modalImg = document.getElementById("img01");
+    // modal.style.display = "block";
+    // if(screen.width < 700) {
+    //     modalImg.src = "{{URL::to('/').'/public/frontend/images/Payment Details Mobile. Ver..png'}}";
+    //     modalImg.style.width = "350px";
+    //     modalImg.style.height = "550px";
+    // } else {
+    //     modalImg.src = "{{URL::to('/').'/public/frontend/images/Payment Details Dek. Ver..png'}}";
+    // }
 
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-    var main = document.getElementsByClassName("main")[0];
+    // // Get the <span> element that closes the modal
+    // var span = document.getElementsByClassName("close")[0];
+    // var main = document.getElementsByClassName("main")[0];
 
-    main.style.opacity = "0.5";
+    // main.style.opacity = "0.5";
 
-    span.onclick = function() {
-        modal.style.display = "none";
-        main.style.opacity = "1";
-    }
+    // span.onclick = function() {
+    //     modal.style.display = "none";
+    //     main.style.opacity = "1";
+    // }
 
     var password = document.getElementById('password');
     var confirm_password = document.getElementById('confirm_password');

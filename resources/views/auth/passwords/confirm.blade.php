@@ -56,7 +56,7 @@
     <div class="container">
         <div class="signup-content">
             <div class="signup-img">
-                <img src="{{asset('/frontend/images/CUMA-Logo.png')}}" alt="">
+                <img src="{{URL::to('/')}}/public/landing/img/logo.png" alt="">
             </div>
             <div class="signup-form" style="padding:80px!important">
                 <form method="POST" class="register-form" id="register-form" action="{{ route('password.email') }}">

@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Etrain</title>
+    <title>{{config('app.name') ?? "Alumni"}}</title>
     <link rel="icon" href="{{URL::to('/')}}/public/landing/img/favicon.png">
     <link rel="stylesheet" href="{{URL::to('/')}}/public/landing/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{URL::to('/')}}/public/landing/css/animate.css">

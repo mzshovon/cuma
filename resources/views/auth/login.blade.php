@@ -79,7 +79,7 @@
     <div class="container">
         <div class="signup-content">
             <div class="signup-img">
-                <img src="{{asset('/frontend/images/CUMA-Logo.png')}}" alt="">
+                <img src="{{URL::to('/')}}/public/landing/img/logo.png" alt="">
             </div>
             <div class="signup-form signin-padding">
                 <form method="POST" class="register-form" id="register-form" action="{{route('login')}}">
@@ -94,7 +94,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <div class="form-input signup-responsive-logo">
-                                <img src="{{asset('/frontend/images/CUMA-Logo.png')}}" alt="">
+                                <img src="{{URL::to('/')}}/public/landing/img/logo.png" alt="">
                             </div>
                             <div class="form-input">
                                 <label for="email" class="required">Email or Phone Number</label>
