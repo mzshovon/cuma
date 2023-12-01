@@ -14,4 +14,6 @@
 
     @include('frontend.partials.testimonial')
 
+    <br>
+
 @endsection

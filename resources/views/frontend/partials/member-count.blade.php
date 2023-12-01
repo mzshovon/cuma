@@ -1,28 +1,22 @@
-<section class="member_counter">
+<section class="member_counter" id="member_count">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
                 <div class="single_member_counter">
-                    <span class="counter">1024</span>
-                    <h4>All Teachers</h4>
+                    <span class="counter">1550</span>
+                    <h4>All Alumnis</h4>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
                 <div class="single_member_counter">
-                    <span class="counter">960</span>
+                    <span class="counter">450</span>
                     <h4> All Students</h4>
                 </div>
             </div>
-            <div class="col-lg-3 col-sm-6">
+            <div class="col-lg-4 col-sm-6">
                 <div class="single_member_counter">
-                    <span class="counter">1020</span>
-                    <h4>Online Students</h4>
-                </div>
-            </div>
-            <div class="col-lg-3 col-sm-6">
-                <div class="single_member_counter">
-                    <span class="counter">820</span>
-                    <h4>Ofline Students</h4>
+                    <span class="counter">230</span>
+                    <h4>International Alumnis</h4>
                 </div>
             </div>
         </div>
